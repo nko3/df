@@ -17,7 +17,7 @@ function Room(data) {
   this.game.emit('init', data)
   
   this.watchers = []
-
+  this.remotes = {}
   
   this.game.on('set:watchers', function(count) {
     rooms.emit('set:watchers', data.id, count)
@@ -28,7 +28,7 @@ function Room(data) {
 
 Room.prototype.getStream = function() {
   var self = this
-  var playerId
+  var playerId, remote
   var game = this.game
   var s = new MuxDemux(function(s){
     if (s.meta == 'data') {
@@ -51,6 +51,9 @@ Room.prototype.getStream = function() {
           }
           playerId = player.id = uniqueId()
           cb(null, player.id)
+          if (remote) {
+            self.remotes[playerId] = remote
+          }
           game.emit('add:player', player)
           if (!game.master) {
             game.emit('set:master', player.id)
@@ -80,6 +83,12 @@ Room.prototype.getStream = function() {
         getBoard: function(cb) { //todo: remove, just for testing
           self.getBoard(cb)
         } 
+      })
+      d.on('remote', function(r) {
+        remote = r
+        if (playerId) {
+          self.remotes[playerId] = remote
+        }
       })
       s.pipe(d).pipe(s)
     }
@@ -153,7 +162,37 @@ Room.prototype.nextMove = function() {
     index++
     if (game.active.length <= index) index = 0
   }
-  game.emit('set:turn', game.active[index])
+  var playerId = game.active[index]
+  var remote = remotes[remote]
+  if (!this.boards[playerId]) {
+    this.boards[playerId] = [].concat(this.startboard)
+  }
+  var diff = this.diff(this.board, this.boards[playerId])
+  if (diff.length) {
+    // todo: possible lock if connection lost in here
+    remote.mixSolution(diff.items, function(err, num) {
+      if (num) {
+        game.set('result:net', {playerId: playerId, packets: num})
+      }
+      game.emit('set:turn', playerId)
+    })
+  }
+  else {
+    game.emit('set:turn', playerId)
+  }
+
+}
+
+Room.prototype.diff = function(b1, b2) {
+  var count = 0
+  var items = {}
+  b1.forEach(function(c, i) {
+    if (c != null && b2[i] == null) {
+      count++;
+      items[i] = c
+    }
+  })
+  return {count: count, items: items}
 }
 
 exports.Room = Room

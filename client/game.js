@@ -173,7 +173,12 @@ exports.init = function(mx, room) {
   mux.pipe(mx.createStream({room: room})).pipe(mux)
   
   mux.createStream('data').pipe(game)
-  var d = dnode({})
+  var d = dnode({
+    mixSolution: function(items, cb) {
+      // TBD
+      console.log('mix', items);
+    }
+  })
   d.on('remote', function(r) {
     global.remote = remote = r
     r.transform('beep', function (s) {
