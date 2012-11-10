@@ -26,9 +26,14 @@ app.get('/', function(req, res) {
   res.render('fp')
 })
 
+var rooms = require('./data/rooms')
+rooms.emit('add:room', {id: 12, name: 'roomname', 'limit': 5})
+rooms.emit('add:room', {id: 13, name: 'foobar', 'limit': 10})
+
+
 var Game = new require('./data/game')
 
-var rooms = {
+var _rooms = {
   foo: new Game()
 }
 /*
@@ -39,16 +44,19 @@ setInterval(function() {
 shoe(function (sock) {
   var mx = new MuxDemux
   mx.on('connection', function(s) {
-    if (s.meta.room) {
-      if (rooms[s.meta.room]) {
-        s.pipe(rooms[s.meta.room].replicateStream()).pipe(s)
+    if (s.meta == 'main') {
+      s.pipe(rooms.replicateStream()).pipe(s)
+    }
+    else if (s.meta.room) {
+      if (_rooms[s.meta.room]) {
+        s.pipe(_rooms[s.meta.room].replicateStream()).pipe(s)
       }
       else {
         s.end()
       }
     }
     else if (s.meta.push) {
-      s.pipe(rooms[s.meta.push])
+      s.pipe(_rooms[s.meta.push])
     }
   })
   mx.pipe(sock).pipe(mx)

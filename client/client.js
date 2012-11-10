@@ -6,18 +6,32 @@ var reconnect = require('reconnect')
 var MuxDemux = require('mux-demux')
 
 var Game = require('../data/game')
+var rooms = require('../data/rooms')
+
 var mx
+
+
+var DEBUG_ROOM = true
 
 $(function() {
   reconnect(function (stream) {
     stream.pipe(mx = MuxDemux()).pipe(stream)
-    
+    if (DEBUG_ROOM) {
+      mx.createStream('main').pipe(rooms)
+    }
+    else
     mx.createStream({room: 'foo'}).pipe(game)
     
   }).connect('/shoe')
 
 });
 
+
+rooms.on('add:room', function(r) {
+  console.log(r)
+})
+
+if (!DEBUG_ROOM) {
 
 var game = new Game()
 
@@ -78,5 +92,8 @@ global.test = function(num) {
   var tests = {1: require('./test1')}
   var g = new Game()
   g.replicateStream().pipe(mx.createStream({push: 'foo'}))
+  g.emit('clear')
   tests[num](g)
+}
+
 }
