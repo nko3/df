@@ -52,7 +52,6 @@ app.post('/new', function(req, res) {
 var Game = new require('./data/game')
 
 var _rooms = {
-  foo: new Game()
 }
 /*
 setInterval(function() {
@@ -66,11 +65,20 @@ shoe(function (sock) {
       s.pipe(rooms.replicateStream()).pipe(s)
     }
     else if (s.meta.room) {
-      if (_rooms[s.meta.room]) {
-        s.pipe(_rooms[s.meta.room].replicateStream()).pipe(s)
+      if (!_rooms[s.meta.room]) {
+        var r = rooms.getRoom(s.meta.room)
+        if (r) {
+          _rooms[s.meta.room] = new Game()
+          _rooms[s.meta.room].emit('init', r)
+          s.pipe(_rooms[s.meta.room].replicateStream()).pipe(s)
+        }
+        else {
+          s.end();
+        }
+        
       }
       else {
-        s.end()
+        s.pipe(_rooms[s.meta.room].replicateStream()).pipe(s)
       }
     }
     else if (s.meta.push) {
