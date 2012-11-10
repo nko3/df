@@ -69,7 +69,7 @@ function Game() {
 
   this.on('add:player', function(player, notactive) {
     self.players[player.id] = player
-    if (notactive) {
+    if (!notactive) {
       self.active.push(player.id)
     }
   })
