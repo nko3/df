@@ -170,3 +170,36 @@ $header_height = 50px
     left 0
     position absolute
     top 0
+    
+.tiles
+  width 288px
+  height 288px
+  border 2px solid #00
+  .tile
+    width 32px
+    float left
+    height 32px
+    font-size 26px
+    text-align center
+    border 1px solid #666
+    box-sizing border-box
+    color #444
+    &.active:hover
+      border 1px solid #c00
+      background #fee
+      
+
+.controls
+  width 288px
+  margin-top 20px
+  border 2px solid #f0e80b
+  height 32px
+  .control
+    @extends .tiles .tile
+    background #fffec2
+    &:hover
+      background #cfc302
+      cursor pointer
+    
+
+    

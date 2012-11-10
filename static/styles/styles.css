@@ -179,3 +179,37 @@ body {
   position: absolute;
   top: 0;
 }
+.tiles {
+  width: 288px;
+  height: 288px;
+  border: 2px solid #000;
+}
+.tiles .tile,
+.controls .control {
+  width: 32px;
+  float: left;
+  height: 32px;
+  font-size: 26px;
+  text-align: center;
+  border: 1px solid #666;
+  box-sizing: border-box;
+  color: #444;
+}
+.tiles .tile.active:hover,
+.controls .control {
+  border: 1px solid #c00;
+  background: #fee;
+}
+.controls {
+  width: 288px;
+  margin-top: 20px;
+  border: 2px solid #f0e80b;
+  height: 32px;
+}
+.controls .control {
+  background: #fffec2;
+}
+.controls .control:hover {
+  background: #cfc302;
+  cursor: pointer;
+}

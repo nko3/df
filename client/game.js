@@ -43,6 +43,7 @@ Game.prototype.increaseTimeout = function(timeout, cb) {
 var MuxDemux = require('mux-demux')
 var dnode = require('dnode')
 var Game = require('../data/game')
+var Grid = require('./gridview').Grid
 
 
 exports.init = function(mx, room) {
@@ -156,6 +157,8 @@ exports.init = function(mx, room) {
   game.on('start', function(board) {
     // board -> Array(81)
     game.stopStartTimer()
+    game.grid = new Grid(board)
+    el.find('.play').empty().append(game.grid.el)
     console.log('got board', board)
   })
   game.stopStartTimer = function() {
