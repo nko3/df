@@ -74,8 +74,22 @@ Room.prototype.getStream = function() {
           }
         },
         sendSolution: function(solution, solveTime, cb) {
-          self.nextMove()
+          if (room.turn != playerId) {
+            return cb({msg: 'timed out'})
+          }
+          for (var i in solution) {
+            if (self.solution[i] == solution[i]) {
+              self.board[i] = self.solution[i]
+            }
+          }
+          self.boards[playerId] = [].concat(self.board)
+          self.game.emit('result:cpu', {
+            playerId: playerId,
+            time: time,
+            ping: (self.turnTime - new Date()) - time
+          })
           cb(null)
+          self.nextMove()
         },
         increaseTimeout: function(timeout, cb) {
         
@@ -175,10 +189,12 @@ Room.prototype.nextMove = function() {
         game.set('result:net', {playerId: playerId, packets: num})
       }
       game.emit('set:turn', playerId)
+      self.turnTime = new Date
     })
   }
   else {
     game.emit('set:turn', playerId)
+    self.turnTime = new Date
   }
 
 }
