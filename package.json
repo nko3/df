@@ -25,7 +25,9 @@
     "shoe": "0.0.7",
     "mux-demux": "~3.3.4",
     "through": "~1.1.1",
-    "reconnect": "~0.2.0"
+    "reconnect": "~0.2.0",
+    "kv": "~1.0.5",
+    "monotonic-timestamp": "0.0.7"
   },
   "engines": {
     "node": "0.8.x"
