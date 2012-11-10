@@ -146,3 +146,9 @@ body {
 .result-cpu td {
   width: 25%;
 }
+.result-net {
+  overflow-x: hidden;
+}
+.result-net-content {
+  overflow-x: scroll;
+}

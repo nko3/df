@@ -54,6 +54,7 @@ exports.init = function(mx, room) {
   var remote
   
   game.resultCpu = {}
+  game.resultNet = {}
 
   $game = require('../views/game.jade')
   var el = $($game({}))
@@ -64,6 +65,7 @@ exports.init = function(mx, room) {
   game.on('init', function(data) {
     //data -> {name, limit}
     game.resultCpu = {}
+    game.resultNet = {}
     el.find('.name').text(data.name)
     el.find('.players-limit').text(data.limit)
     el.find('.board').empty()
@@ -135,6 +137,23 @@ exports.init = function(mx, room) {
 
   game.on('result:net', function(result) {
     // result -> {playerId, packets}
+    var unit = 10
+    if (typeof game.resultNetSum == 'undefined')
+      game.resultNetSum = 0
+    
+    var id = result.playerId
+    if (typeof game.resultNet[id] == 'undefined') {
+      game.resultNet[id] = {sum: result.packets}
+      /*var rowEl = $('div')
+      rowEl.attr('id', 'rownet-'+id)
+      rowEl.addClass('row')
+      rowEl.text(game.players[id].name)
+      el.find('.result-net-content').append(rowEl)*/
+    } else {
+      game.resultNet[id].sum += result.packets
+      //el.find('#rownet-'+id).append(' '+ result.packets)
+    }
+    game.resultNetSum += result.packets
   })
 
   game.renderPlayers = function() {
