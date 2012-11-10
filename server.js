@@ -26,13 +26,26 @@ app.get('/', function(req, res) {
   res.render('fp')
 })
 
-var game = new (require('./data/game'))
+var Game = new require('./data/game')
+
+var rooms = {
+  foo: new Game()
+}
+
+setInterval(function() {
+  rooms.foo.emit('set:watchers', Math.floor(Math.random()*10))
+}, 1000)
 
 shoe(function (sock) {
   var mx = new MuxDemux
   mx.on('connection', function(s) {
     if (s.meta.room) {
-      s.pipe(through(function(d) {console.log(d); this.emit('data', d.toUpperCase())})).pipe(s)
+      if (rooms[s.meta.room]) {
+        s.pipe(rooms[s.meta.room].replicateStream()).pipe(s)
+      }
+      else {
+        s.end()
+      }
     }
   })
   mx.pipe(sock).pipe(mx)

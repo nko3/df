@@ -101,6 +101,8 @@ function Game() {
     self.netresults.push(result)
   })
   
+  this.emit('clear')
+  
 }
 inherits(Game, Data)
 

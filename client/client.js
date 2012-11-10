@@ -5,16 +5,20 @@ var shoe = require('shoe')
 var reconnect = require('reconnect')
 var MuxDemux = require('mux-demux')
 
+var Game = require('../data/game')
 var mx
 $(function() {
-reconnect(function (stream) {
-  stream.pipe(mx = MuxDemux()).pipe(stream)
+  reconnect(function (stream) {
+    stream.pipe(mx = MuxDemux()).pipe(stream)
   
-  var s = mx.createStream({room: 'abc'})
-  s.write('bla bla')
-  s.on('data', function(d) { console.log(d)})
+    var g = new Game()
+    mx.createStream({room: 'foo'}).pipe(g)
     
-}).connect('/shoe')
+    g.on('set:watchers', function(c) {
+      game.emit('set:watchers', c)
+    })
+    
+  }).connect('/shoe')
 
 });
 
