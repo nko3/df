@@ -9,6 +9,7 @@ var el = $($game({}))
 game.on('init', function(data) {
   //data -> {name, limit}
   el.find('.name').text(data.name)
+  el.find('.players > .limit').text(data.limit)
 })
 game.on('set:state', function(state) {
   //state -> (pending, active, end)
@@ -19,9 +20,10 @@ game.on('set:watchers', function(count) {
 
 game.on('add:player', function(player) {
   // player -> {id, name, avatar}
+  el.find('.players > .joined').text(game.active.length)
 })
 game.on('del:player', function(playerId) {
-  
+  el.find('.players > .joined').text(game.active.length)
 })
 
 game.on('set:master', function(playerId) {
