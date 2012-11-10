@@ -2,58 +2,70 @@ var Data = require('data')
 var inherits = require('util').inherits
 
 function Game() {
-  this.name = ''
-  this.limit = 10
-  this.state = 'pending'
-  this.players = {}
-  this.active = []
-  this.master = null
-  this.starttime = -1
-  this.board = null
-  this.turn = null
-  this.cpuresults = []
-  this.netresults = []
+  Data.call(this)
   
+  var self = this
   this.on('clear', function() {
-    
+    self.name = ''
+    self.limit = 10
+    self.watchers = 0
+    self.state = 'pending'
+    self.players = {}
+    self.active = []
+    self.master = null
+    self.starttime = -1
+    self.board = null
+    self.turn = null
+    self.cpuresults = []
+    self.netresults = []
   })
   this.on('replicate', function() {
     
   })
 
   game.on('init', function(data) {
-    //data -> {name, limit}
+    self.name = data.name
+    self.limit = data.limit
+    if (data.watchers) {
+      self._emit('set:watchers', data.watchers)
+    }
   })
   game.on('set:state', function(state) {
-    //state -> (pending, active, end)
+    self.state = state
   })
   game.on('set:watchers', function(count) {
+    self.watchers = count
   })
 
   game.on('add:player', function(player) {
-    // player -> {id, name, avatar}
+    self.players[player.id] = player
+    self.active.push(player.id)
   })
   game.on('del:player', function(playerId) {
+    var ix = self.active.indexOf(id)
+    if (ix != -1) {
+      self.active.splice(ix, 1)
+    }
   })
 
   game.on('set:master', function(playerId) {
-    // master player has right to start the game.
+    self.master = playerId
   })
   game.on('set:starttime', function(time) {
-    //in seconds
+    self.starttime = time
   })
   game.on('start', function(board) {
-    // board -> Array(81)
+    self.board = board
   })
   game.on('turn', function(playerId) {
-    // move pointer arrow. if playerId == current then show buttons.
+    self.turn = playerId
   })
 
   game.on('result:cpu', function(result) {
-    // result -> {playerId, time, ping}
+    self.cpuresults.push(result)
   })
   game.on('result:net', function(result) {
-    // result -> {playerId, packets}
+    self.netresults.push(result)
   })
   
 }
