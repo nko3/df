@@ -40,7 +40,7 @@ function activate(state, replace) {
     throw('can\'t match ' + url)
   }
   
-  var last = match.fn(match.params)
+  last = match.fn(match.params)
 
   if (replace)
     window.history.replaceState(state, state.title || "", state.url)

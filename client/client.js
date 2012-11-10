@@ -6,7 +6,7 @@ var reconnect = require('reconnect')
 var MuxDemux = require('mux-demux')
 
 var Game = require('../data/game')
-var rooms = require('../data/rooms')
+
 
 var mx
 
@@ -17,8 +17,7 @@ $(function() {
   reconnect(function (stream) {
     stream.pipe(mx = MuxDemux()).pipe(stream)
     if (DEBUG_ROOM) {
-      $('#cont').empty()
-      mx.createStream('main').pipe(rooms)
+        router.init()
     }
     else
     mx.createStream({room: 'foo'}).pipe(game)
@@ -29,35 +28,11 @@ $(function() {
 
 var router = require('./router')
 
-rooms.on('add:room', function(r) {
-  var $room = require('../views/room.jade')
-  var el = $($room(r))
-  el.attr('id', 'room-' + r.id)
-  el.find('.open').on('click', function() {
-    router.navigate('/p/' + r.id)
-  })
-  $('#cont').append(el)
-})
 
-rooms.on('del:room', function(id) {
-  $('#room-' + id).remove()
-})
-
-rooms.on('set:watchers', function(count) {
-  $('#room-' + id).find('.watchers').text(count)
-})
-
-rooms.on('set:joined', function(count) {
-  $('#room-' + id).find('.players > .joined').text(count)
-})
-
-$(function(){
-  router.init()
-})
 
 router.addRoute('/game.html', function() {
   console.log('open main');
-  return {}
+  return require('./rooms').init(mx)
 })
 
 router.addRoute('/p/:room', function(d) {
@@ -66,18 +41,6 @@ router.addRoute('/p/:room', function(d) {
 })
 
 
-global.addRoom = function (data) {
-  $.ajax({
-    type: 'POST',
-    url: '/new',
-    dataType: 'json',
-    data: data
-  }).done(function(data) {
-    console.log('Posted', data);
-  }).fail(function(e) {
-    throw(e)
-  })
-}
 
 if (!DEBUG_ROOM) {
 
