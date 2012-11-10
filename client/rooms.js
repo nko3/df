@@ -19,7 +19,7 @@ rooms.on('add:room', function(r) {
   var $room = require('../views/room.jade')
   var el = $($room(r))
   el.attr('id', 'room-' + r.id)
-  el.find('.open').on('click', function() {
+  el.find('.button-open').on('click', function() {
     require('./router').navigate('/p/' + r.id)
   })
   $('#cont').append(el)
@@ -29,11 +29,11 @@ rooms.on('del:room', function(id) {
   $('#room-' + id).remove()
 })
 
-rooms.on('set:watchers', function(count) {
+rooms.on('set:watchers', function(id, count) {
   $('#room-' + id).find('.watchers').text(count)
 })
 
-rooms.on('set:joined', function(count) {
+rooms.on('set:joined', function(id, count) {
   $('#room-' + id).find('.players > .joined').text(count)
 })
 
