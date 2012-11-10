@@ -74,7 +74,10 @@ Room.prototype.getStream = function() {
         },
         increaseTimeout: function(timeout, cb) {
         
-        }
+        },
+        getBoard: function(cb) { //todo: remove, just for testing
+          self.getBoard(cb)
+        } 
       })
       s.pipe(d).pipe(s)
     }
@@ -125,7 +128,14 @@ Room.prototype.activate = function () {
 }
 
 Room.prototype.getBoard = function(cb) {
-  cb(new Array(81), new Array(81))
+  var fork = require('child_process').fork
+  var sudoku = fork(__dirname + '/sudoku.js', [], {silent: true})
+  var mx = new MuxDemux(function(s) {
+    s.on('data', function(d) {
+      cb(d.puzzle, d.solution)
+    })
+  })
+  sudoku.stdout.pipe(mx)
 }
 
 exports.Room = Room
