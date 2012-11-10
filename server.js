@@ -32,9 +32,6 @@ var room = require('./room')
 app.post('/new', room.new)
 
 
-var _rooms = {
-}
-
 shoe(function (sock) {
   var mx = new MuxDemux
   mx.on('connection', function(s) {
@@ -44,16 +41,12 @@ shoe(function (sock) {
     else if (s.meta.room) {
       var r = room.getInstance(s.meta.room)
       if (r) s.pipe(r.getStream()).pipe(s)
-      else {
-        s.end()
-      }
+      else s.end()
     }
     else if (s.meta.push) {
       r = room.getInstance(s.meta.push)
       if (r) s.pipe(r.game)
-      else {
-        s.end()
-      }
+      else s.end()
     }
   })
   mx.pipe(sock).pipe(mx)
