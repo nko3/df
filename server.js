@@ -7,7 +7,6 @@ var conf = global.conf = require('rc')(require('./package').name, {
   port: 3300
 })
 
-
 var app = express()
 app.use(express.bodyParser())
 app.set('views', __dirname + '/views');
@@ -29,44 +28,24 @@ app.get('/p/:room', function(req, res) {
   res.sendfile(__dirname + '/static/game.html')
 })
 
-var rooms = require('./data/rooms')
-var kv = require('kv')('/tmp/kv')
-kv.has('rooms', function(err, stat){
-  if (!err && stat) {
-    kv.get('rooms').pipe(rooms)
-  }
-  rooms.replicateStream().pipe(kv.put('rooms'))
-})
-
-function uniqueId() {
-  return Math.floor(Math.random() * 1e8).toString(16)
-}
-
-app.post('/new', function(req, res) {
-  req.body.id = uniqueId()
-  rooms.emit('add:room', req.body)
-  res.json(req.body)
-})
+var room = require('./room')
+app.post('/new', room.new)
 
 
 var Game = new require('./data/game')
 
 var _rooms = {
 }
-/*
-setInterval(function() {
-  rooms.foo.emit('set:watchers', Math.floor(Math.random()*10))
-}, 1000)
-*/
+
 shoe(function (sock) {
   var mx = new MuxDemux
   mx.on('connection', function(s) {
     if (s.meta == 'main') {
-      s.pipe(rooms.replicateStream()).pipe(s)
+      s.pipe(room.rooms.replicateStream()).pipe(s)
     }
     else if (s.meta.room) {
       if (!_rooms[s.meta.room]) {
-        var r = rooms.getRoom(s.meta.room)
+        var r = room.rooms.getRoom(s.meta.room)
         if (r) {
           _rooms[s.meta.room] = new Game()
           _rooms[s.meta.room].emit('init', r)
