@@ -1,5 +1,23 @@
 var $ = require('jquery-browserify')
-var Game = require('./game')
+//var Game = require('./game')
+
+var shoe = require('shoe')
+var reconnect = require('reconnect')
+var MuxDemux = require('mux-demux')
+
+var Game = require('../data/game')
+var mx
+
+$(function() {
+  reconnect(function (stream) {
+    stream.pipe(mx = MuxDemux()).pipe(stream)
+    
+    mx.createStream({room: 'foo'}).pipe(game)
+    
+  }).connect('/shoe')
+
+});
+
 
 var game = new Game()
 
@@ -58,5 +76,7 @@ $(function(){
 
 global.test = function(num) {
   var tests = {1: require('./test1')}
-  tests[num](game)
+  var g = new Game()
+  g.replicateStream().pipe(mx.createStream({push: 'foo'}))
+  tests[num](g)
 }
