@@ -131,6 +131,7 @@ exports.init = function(mx, room) {
   game.on('set:master', function(playerId) {
     // master player has right to start the game.
     game.emit('update:start-btn')
+    if(game.players[playerId])
     el.find('.button-start-notmaster .mastername').text(
       game.players[playerId].name
     )

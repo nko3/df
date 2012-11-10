@@ -183,8 +183,12 @@ $header_height = 50px
     text-align center
     border 1px solid #666
     box-sizing border-box
-    color #444
+    color #555
+    &.active
+      background #fff
+      color #000
     &.active:hover
+    &.active.selected
       border 1px solid #c00
       background #fee
       
@@ -194,6 +198,9 @@ $header_height = 50px
   margin-top 20px
   border 2px solid #f0e80b
   height 32px
+  display none
+  &.visible
+    display block
   .control
     @extends .tiles .tile
     background #fffec2

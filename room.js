@@ -23,6 +23,15 @@ function Room(data) {
     rooms.emit('set:watchers', data.id, count)
   })
   
+  var game = this.game
+  this.game.on('set:state', function(state) {
+    if (state == 'end') {
+      setTimeout(function() {
+        game.emit('set:state', 'pending')
+      }, 5000)
+    }
+  })
+  
   this.game.emit('set:watchers', 0)
 }
 

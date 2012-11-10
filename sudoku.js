@@ -4,6 +4,9 @@ var puzzle     = sudoku.makepuzzle();
 var solution   = sudoku.solvepuzzle(puzzle);
 var difficulty = sudoku.ratepuzzle(puzzle, 4);
 
+puzzle = puzzle.map(function(n) {return n == null ? n : n + 1})
+solution = solution.map(function(n) {return n == null ? n : n + 1})
+
 var empty = puzzle.reduce(function(memo, val){
   return val == null ? ++memo : memo
 }, 0)

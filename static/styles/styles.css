@@ -193,9 +193,16 @@ body {
   text-align: center;
   border: 1px solid #666;
   box-sizing: border-box;
-  color: #444;
+  color: #555;
+}
+.tiles .tile.active,
+.controls .control {
+  background: #fff;
+  color: #000;
 }
 .tiles .tile.active:hover,
+.controls .control,
+.tiles .tile.active.selected,
 .controls .control {
   border: 1px solid #c00;
   background: #fee;
@@ -205,6 +212,10 @@ body {
   margin-top: 20px;
   border: 2px solid #f0e80b;
   height: 32px;
+  display: none;
+}
+.controls.visible {
+  display: block;
 }
 .controls .control {
   background: #fffec2;
