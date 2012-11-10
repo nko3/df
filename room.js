@@ -115,6 +115,17 @@ Room.prototype.getStream = function() {
 
 Room.prototype.activate = function () {
   console.log('activate')
+  var game = this.game
+  this.getBoard(function(board, solution){
+    self.board = board
+    self.solution = solution
+    game.emit('set:start', board)
+    game.emit('set:state', 'active')
+  })
+}
+
+Room.prototype.getBoard = function(cb) {
+  cb(new Array(81), new Array(81))
 }
 
 exports.Room = Room
