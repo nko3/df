@@ -156,6 +156,7 @@ exports.init = function(mx, room) {
   game.on('start', function(board) {
     // board -> Array(81)
     game.stopStartTimer()
+    console.log('got board', board)
   })
   game.stopStartTimer = function() {
     $('#cont').removeClass('starttime')
