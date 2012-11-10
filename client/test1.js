@@ -26,6 +26,7 @@ function test(game) {
 
   setTimeout(function() {
     game.emit('result:cpu', {playerId: 12, time: 800, ping: 300})
+    game.emit('result:net', {playerId: 12, packets: 1})
     game.emit('turn', 13)
     game.emit('set:watchers', 4)
   }, 10000)
@@ -44,18 +45,38 @@ function test(game) {
     game.emit('set:watchers', 7)
   }, 12000)
   
+  setTimeout(function() {
+    game.emit('result:cpu', {playerId: 13, time: 1250, ping: 200})
+    game.emit('result:net', {playerId: 13, packets: 4})
+  }, 13000)
+
   setTimeout(function(){
     game.emit('result:cpu', {playerId: 12, time: 1250, ping: 200})
     game.emit('result:net', {playerId: 12, packets: 1})
   }, 14000)
+
+  setTimeout(function(){
+    game.emit('result:cpu', {playerId: 11, time: 1150, ping: 200})
+    game.emit('result:net', {playerId: 11, packets: 4})
+  }, 15000)
+
+  setTimeout(function(){
+    game.emit('result:cpu', {playerId: 13, time: 1150, ping: 200})
+    game.emit('result:net', {playerId: 13, packets: 20})
+  }, 16000)
+
+  setTimeout(function(){
+    game.emit('result:cpu', {playerId: 14, time: 1950, ping: 200})
+    game.emit('result:net', {playerId: 14, packets: 50})
+  }, 17000)
   
   setTimeout(function() {
     game.emit('set:state', 'end')
-  }, 15000)
+  }, 18000)
 
   setTimeout(function() {
     game.emit('set:state', 'pending')
-  }, 18000)
+  }, 19000)
   
 
 }
