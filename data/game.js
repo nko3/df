@@ -1,4 +1,4 @@
-var Data = require('data')
+var Data = require('../lib/data')
 var inherits = require('util').inherits
 
 function Game() {
@@ -74,7 +74,7 @@ function Game() {
     }
   })
   this.on('del:player', function(playerId) {
-    var ix = self.active.indexOf(id)
+    var ix = self.active.indexOf(playerId)
     if (ix != -1) {
       self.active.splice(ix, 1)
     }
