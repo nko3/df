@@ -1,3 +1,5 @@
+var MuxDemux = require('mux-demux')
+var dnode = require('dnode')
 var rooms = require('./data/rooms')
 var Game = require('./data/game')
 
@@ -26,7 +28,20 @@ function Room(data) {
 Room.prototype.getStream = function() {
   var self = this
   var game = this.game
-  var s = game.replicateStream()
+  var s = new MuxDemux(function(s){
+    if (s.meta == 'data') {
+      s.pipe(game.replicateStream()).pipe(s)
+    }
+    else if (s.meta == 'dnode') {
+      var d = dnode({
+        transform: function(s, cb) {
+          cb(s.replace(/[aeiou]{2,}/, 'oo').toUpperCase())
+        }
+      })
+      s.pipe(d).pipe(s)
+    }
+  })
+  
   s.on('end', function() {
     var ix = self.watchers.indexOf(s)
     self.watchers.splice(ix, 1)

@@ -40,13 +40,15 @@ Game.prototype.increaseTimeout = function(timeout, cb) {
 */
 
 //module.exports = Game
-
+var MuxDemux = require('mux-demux')
+var dnode = require('dnode')
 var Game = require('../data/game')
 
 
 exports.init = function(mx, room) {
   global.room = room;
   global.mx = mx
+  
 
   var game = new Game()
 
@@ -124,11 +126,22 @@ exports.init = function(mx, room) {
 
   $('#cont').html(el)  
   
-  var s = mx.createStream({room: room})
-  s.pipe(game)
+  var mux = new MuxDemux()
+  mux.pipe(mx.createStream({room: room})).pipe(mux)
+  
+  mux.createStream('data').pipe(game)
+  var d = dnode({})
+  d.on('remote', function(remote) {
+    remote.transform('beep', function (s) {
+        console.log('beep => ' + s);
+    });
+  })
+  d.pipe(mux.createStream('dnode')).pipe(d)
+  
+  
   return {
     dispose: function() {
-      s.end();
+      mux.end();
     }
   }
 }
