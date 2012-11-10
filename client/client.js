@@ -26,9 +26,23 @@ $(function() {
 
 });
 
-
 rooms.on('add:room', function(r) {
-  console.log(r)
+  var $room = require('../views/room.jade')
+  var el = $($room(r))
+  el.id = 'room-' + r.id
+  $('#cont').append(el)
+})
+
+rooms.on('del:room', function(id) {
+  $('#room-' + id).remove()
+})
+
+rooms.on('set:watchers', function(count) {
+  $('#room-' + id).find('.watchers').text(count)
+})
+
+rooms.on('set:joined', function(count) {
+  $('#room-' + id).find('.players > .joined').text(count)
 })
 
 if (!DEBUG_ROOM) {
