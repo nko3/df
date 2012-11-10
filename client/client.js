@@ -6,6 +6,8 @@ var game = new Game()
 $game = require('../views/game.jade')
 var el = $($game({}))
 
+$board = require('../views/board.jade')
+
 game.on('init', function(data) {
   //data -> {name, limit}
   el.find('.name').text(data.name)
@@ -21,9 +23,11 @@ game.on('set:watchers', function(count) {
 game.on('add:player', function(player) {
   // player -> {id, name, avatar}
   el.find('.players > .joined').text(game.active.length)
+  el.find('.board').html($board({players: game.active}))
 })
 game.on('del:player', function(playerId) {
   el.find('.players > .joined').text(game.active.length)
+  el.find('.board').html($board({players: game.active}))
 })
 
 game.on('set:master', function(playerId) {
