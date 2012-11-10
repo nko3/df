@@ -41,12 +41,14 @@ shoe(function (sock) {
   mx.on('connection', function(s) {
     if (s.meta.room) {
       if (rooms[s.meta.room]) {
-        s.pipe(rooms[s.meta.room])
-        rooms[s.meta.room].replicateStream().pipe(s)
+        s.pipe(rooms[s.meta.room].replicateStream()).pipe(s)
       }
       else {
         s.end()
       }
+    }
+    else if (s.meta.push) {
+      s.pipe(rooms[s.meta.push])
     }
   })
   mx.pipe(sock).pipe(mx)

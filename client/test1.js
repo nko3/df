@@ -39,7 +39,7 @@ function test(game) {
     game.emit('result:net', {playerId: 11, packets: 3})
     game.emit('turn', 12)
     game.emit('del:player', 13)
-    game.emit('set:watchers', 3)
+    game.emit('set:watchers', 7)
   }, 12000)
   
   setTimeout(function(){

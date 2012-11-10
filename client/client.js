@@ -7,13 +7,12 @@ var MuxDemux = require('mux-demux')
 
 var Game = require('../data/game')
 var mx
-var ss
+
 $(function() {
   reconnect(function (stream) {
     stream.pipe(mx = MuxDemux()).pipe(stream)
     
-    ss = mx.createStream({room: 'foo'})
-    ss.pipe(game)
+    mx.createStream({room: 'foo'}).pipe(game)
     
   }).connect('/shoe')
 
@@ -74,6 +73,6 @@ $(function(){
 global.test = function(num) {
   var tests = {1: require('./test1')}
   var g = new Game()
-  g.replicateStream().pipe(ss)
+  g.replicateStream().pipe(mx.createStream({push: 'foo'}))
   tests[num](g)
 }
