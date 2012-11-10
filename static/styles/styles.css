@@ -1,3 +1,7 @@
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 16px;
+}
 .fp {
   font-family: Helvetica;
   background: #eee;
@@ -27,4 +31,49 @@
 }
 .fp a:hover {
   text-decoration: underline;
+}
+#cont {
+  margin: 20px auto;
+  width: 960px;
+}
+.header {
+  background-color: #999;
+  border-radius: 5px;
+  color: #fff;
+  height: 50px;
+  padding: 0 20px;
+  position: relative;
+}
+.header .app-name {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 50px;
+}
+.header .info {
+  line-height: 50px;
+  position: absolute;
+  right: 20px;
+  top: 0;
+}
+.header .info .label {
+  font-weight: bold;
+  padding-left: 10px;
+}
+.content {
+  padding-top: 10px;
+}
+.content .col {
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  float: left;
+  height: 314px;
+  margin-left: 9px;
+  padding: 10px;
+  width: 314px;
+}
+.content .col:first-child {
+  margin-left: 0;
 }
