@@ -74,9 +74,11 @@ exports.init = function(mx, room) {
       !!game.master && game.active.length >= 2
     )
     el.find('.button-start-nopeople').toggle(
+      !game.timerInterval &&
       game.state == 'pending' && game.active.length < 2
     )
     el.find('.button-start-notmaster').toggle(
+      !game.timerInterval &&
       game.state == 'pending' && game.master != game.myId &&
       !!game.master && game.active.length >= 2
     )
@@ -134,15 +136,34 @@ exports.init = function(mx, room) {
   })
   game.on('set:starttime', function(time) {
     //in seconds
-    $('#cont').addClass('starttime')
-    $('.timer').text(time);
-    game.timerInterval = setInterval(function(){$('.timer').text(parseInt($('.timer').text()) - 1)}, 1000)
+    game.stopStartTimer()
+    time = parseInt(time)
+    if (time > 0) {
+      $('#cont').addClass('starttime')
+      $('.timer').text(parseInt(time));
+      game.timerInterval = setInterval(function(){
+        var val = parseInt($('.timer').text()) - 1
+        if (val > 0) {
+          $('.timer').text(parseInt($('.timer').text()) - 1)
+        }
+        else {
+          game.stopStartTimer();
+        }
+      }, 1000)
+    }
+    game.emit('update:start-btn')
   })
   game.on('start', function(board) {
     // board -> Array(81)
+    game.stopStartTimer()
+  })
+  game.stopStartTimer = function() {
     $('#cont').removeClass('starttime')
     clearInterval(game.timerInterval)
-  })
+    game.timerInterval = 0
+    game.emit('update:start-btn')
+  }
+  
   game.on('turn', function(playerId) {
     // move pointer arrow. if playerId == current then show buttons.
     el.find('.player').removeClass('current')
@@ -205,6 +226,14 @@ exports.init = function(mx, room) {
       }
       game.myId = id
     })
+  })
+  el.find('.button-start .btn').on('click', function() {
+    remote.setStartTime(parseInt($('.button-start > input').val()) || 10, 
+      function(err) {
+        if (err) {
+          alert(err.msg)
+        }
+      })
   })
 
   $('#cont').html(el)  

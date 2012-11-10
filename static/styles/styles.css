@@ -126,14 +126,14 @@ body {
 .board-wrap .button-solve {
   display: none;
 }
-.play-wrap .timer,
+.play-wrap .timer-cont,
 .play-wrap .play,
 .play-wrap .button-start,
 .play-wrap .button-start-nopeople,
 .play-wrap .button-start-notmaster {
   display: none;
 }
-.starttime .play-wrap .timer {
+.starttime .play-wrap .timer-cont {
   display: block;
 }
 .state-active .play-wrap .play {

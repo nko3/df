@@ -61,7 +61,7 @@ Room.prototype.getStream = function() {
         },
         setStartTime: function(time, cb) {
           if (game.state == 'pending' && playerId == game.master
-            && game.players.length >= 2) {
+            && game.active.length >= 2) {
             clearTimeout(self.startTimeout)
             cb(null)
             game.emit('set:starttime', time)
@@ -144,6 +144,7 @@ Room.prototype.getStream = function() {
 Room.prototype.activate = function () {
   console.log('activate')
   var game = this.game
+  var self = this
   this.boards = {}
   this.getBoard(function(board, solution){
     self.board = self.startboard = board
@@ -177,7 +178,7 @@ Room.prototype.nextMove = function() {
     if (game.active.length <= index) index = 0
   }
   var playerId = game.active[index]
-  var remote = remotes[remote]
+  var remote = this.remotes[remote]
   if (!this.boards[playerId]) {
     this.boards[playerId] = [].concat(this.startboard)
   }
@@ -194,7 +195,7 @@ Room.prototype.nextMove = function() {
   }
   else {
     game.emit('set:turn', playerId)
-    self.turnTime = new Date
+    this.turnTime = new Date
   }
 
 }
