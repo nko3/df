@@ -2,7 +2,7 @@ function test(game) {
   
   game.emit('init', {name: 'roomtest1', limit: 10})
   game.emit('set:watchers', 3)
-  game.emit('set:status', 'pending')
+  game.emit('set:state', 'pending')
   
   game.emit('add:player', {id: 11, name: 'John'})
   game.emit('add:player', {id: 12, name: 'Paul'})
