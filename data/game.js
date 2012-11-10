@@ -19,52 +19,85 @@ function Game() {
     self.cpuresults = []
     self.netresults = []
   })
-  this.on('replicate', function() {
-    
+  this.on('replicate', function(copy) {
+    copy.emit('init', {
+      name: self.name,
+      limit: self.limit,
+      watchers: self.watchers
+    })
+    self.active.forEach(function(id) {
+      copy.emit('add:player', self.players[id])
+    })
+    for (var id in self.players) {
+      if (-1 == self.active.indexOf(id)) {
+        copy.emit('add:player', self.players[id], true)
+      }
+    }
+    if (self.master) {
+      copy.emit('set:master', self.master)
+    }
+    if (self.turn) {
+      copy.emit('set:turn', self.turn)
+    }
+    if (self.starttime != -1) {
+      var diff = self.starttime - (new Date() - self.starttimestamp) / 1000
+      if (diff > 0) {
+        copy.emit('set:starttime', diff)
+      }
+    }
+    self.cpuresults.forEach(function(c) {
+      copy.emit('result:cpu', c)
+    })
+    self.netresults.forEach(function(n) {
+      copy.emit('result:net', n)
+    })
   })
 
-  game.on('init', function(data) {
+  this.on('init', function(data) {
     self.name = data.name
     self.limit = data.limit
     if (data.watchers) {
       self._emit('set:watchers', data.watchers)
     }
   })
-  game.on('set:state', function(state) {
+  this.on('set:state', function(state) {
     self.state = state
   })
-  game.on('set:watchers', function(count) {
+  this.on('set:watchers', function(count) {
     self.watchers = count
   })
 
-  game.on('add:player', function(player) {
+  this.on('add:player', function(player, notactive) {
     self.players[player.id] = player
-    self.active.push(player.id)
+    if (notactive) {
+      self.active.push(player.id)
+    }
   })
-  game.on('del:player', function(playerId) {
+  this.on('del:player', function(playerId) {
     var ix = self.active.indexOf(id)
     if (ix != -1) {
       self.active.splice(ix, 1)
     }
   })
 
-  game.on('set:master', function(playerId) {
+  this.on('set:master', function(playerId) {
     self.master = playerId
   })
-  game.on('set:starttime', function(time) {
+  this.on('set:starttime', function(time) {
     self.starttime = time
+    self.starttimestamp = new Date
   })
-  game.on('start', function(board) {
+  this.on('start', function(board) {
     self.board = board
   })
-  game.on('turn', function(playerId) {
+  this.on('turn', function(playerId) {
     self.turn = playerId
   })
 
-  game.on('result:cpu', function(result) {
+  this.on('result:cpu', function(result) {
     self.cpuresults.push(result)
   })
-  game.on('result:net', function(result) {
+  this.on('result:net', function(result) {
     self.netresults.push(result)
   })
   

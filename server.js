@@ -26,7 +26,7 @@ app.get('/', function(req, res) {
   res.render('fp')
 })
 
-
+var game = new (require('./data/game'))
 
 shoe(function (sock) {
   var mx = new MuxDemux
