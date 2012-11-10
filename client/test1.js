@@ -10,6 +10,7 @@ function test(game) {
   
   setTimeout(function() {
     game.emit('add:player', {id: 13, name: 'Ringo'})
+    game.emit('add:player', {id: 14, name: 'George'})
   }, 2000)
   
   setTimeout(function() {
