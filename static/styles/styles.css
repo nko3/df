@@ -79,8 +79,12 @@ body {
 .content .col:first-child {
   margin-left: 0;
 }
-.board .current {
+.board-wrap .board .current {
   color: #090;
+}
+.board-wrap .button-join,
+.board-wrap .button-solve {
+  display: none;
 }
 .play-wrap .timer,
 .play-wrap .play,

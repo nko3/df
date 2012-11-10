@@ -65,7 +65,7 @@ exports.init = function(mx, room) {
     //state -> (pending, active, end)
     $('#cont').attr('class', 'state-'+state)
     if (state == 'end')
-      el.find('.board div').removeClass('current')
+      el.find('.player').removeClass('current')
   })
   game.on('set:watchers', function(count) {
     el.find('.watchers').text(count)
