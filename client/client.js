@@ -60,6 +60,8 @@ game.on('start', function(board) {
 })
 game.on('turn', function(playerId) {
   // move pointer arrow. if playerId == current then show buttons.
+  el.find('.board div').removeClass('current')
+  el.find('.board #player'+playerId).addClass('current')
 })
 
 game.on('result:cpu', function(result) {

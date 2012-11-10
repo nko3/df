@@ -79,3 +79,6 @@ body {
 .content .col:first-child {
   margin-left: 0;
 }
+.board .current {
+  color: #090;
+}
