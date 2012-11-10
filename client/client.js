@@ -34,6 +34,9 @@ game.on('init', function(data) {
 })
 game.on('set:state', function(state) {
   //state -> (pending, active, end)
+  $('#cont').attr('class', 'state-'+state)
+  if (state == 'end')
+    el.find('.board div').removeClass('current')
 })
 game.on('set:watchers', function(count) {
   el.find('.watchers .value').text(count)
@@ -54,9 +57,13 @@ game.on('set:master', function(playerId) {
 })
 game.on('set:starttime', function(time) {
   //in seconds
+  $('#cont').addClass('starttime')
+  game.timerInterval = setInterval(function(){$('.timer').text(parseInt($('.timer').text()) - 1)}, 1000)
 })
 game.on('start', function(board) {
   // board -> Array(81)
+  $('#cont').removeClass('starttime')
+  clearInterval(game.timerInterval)
 })
 game.on('turn', function(playerId) {
   // move pointer arrow. if playerId == current then show buttons.

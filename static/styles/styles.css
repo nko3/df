@@ -82,3 +82,14 @@ body {
 .board .current {
   color: #090;
 }
+.play-wrap .timer,
+.play-wrap .play,
+.play-wrap .button-start {
+  display: none;
+}
+.starttime .play-wrap .timer {
+  display: block;
+}
+.state-active .play-wrap .play {
+  display: block;
+}
