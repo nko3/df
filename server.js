@@ -32,8 +32,6 @@ var room = require('./room')
 app.post('/new', room.new)
 
 
-var Game = new require('./data/game')
-
 var _rooms = {
 }
 
@@ -44,24 +42,18 @@ shoe(function (sock) {
       s.pipe(room.rooms.replicateStream()).pipe(s)
     }
     else if (s.meta.room) {
-      if (!_rooms[s.meta.room]) {
-        var r = room.rooms.getRoom(s.meta.room)
-        if (r) {
-          _rooms[s.meta.room] = new Game()
-          _rooms[s.meta.room].emit('init', r)
-          s.pipe(_rooms[s.meta.room].replicateStream()).pipe(s)
-        }
-        else {
-          s.end();
-        }
-        
-      }
+      var r = room.getInstance(s.meta.room)
+      if (r) s.pipe(r.getStream()).pipe(s)
       else {
-        s.pipe(_rooms[s.meta.room].replicateStream()).pipe(s)
+        s.end()
       }
     }
     else if (s.meta.push) {
-      s.pipe(_rooms[s.meta.push])
+      r = room.getInstance(s.meta.push)
+      if (r) s.pipe(r.game)
+      else {
+        s.end()
+      }
     }
   })
   mx.pipe(sock).pipe(mx)
