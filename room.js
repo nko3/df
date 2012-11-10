@@ -56,7 +56,18 @@ Room.prototype.getStream = function() {
           }
         },
         setStartTime: function(time, cb) {
-          
+          if (game.state == 'pending' && playerId == game.master
+            && game.players.length >= 2) {
+            clearTimeout(self.startTimeout)
+            cb(null)
+            game.emit('set:starttime', time)
+            self.startTimeout = setTimeout(function() {
+              self.activate()
+            }, time * 1000)
+          }
+          else {
+            cb({msg:'can\'t set start time'})
+          }
         },
         sendSolution: function(solution, solveTime, cb) {
         
@@ -86,7 +97,8 @@ Room.prototype.getStream = function() {
       }
       if (game.players.length < 1) {
         if (game.state == 'pending') {
-          // clear the start time clock
+          game.emit('set:starttime', -1)
+          clearTimeout(self.startTimeout)
         }
         else if (game.state == 'active') {
           game.emit('set:state', 'end')
@@ -99,6 +111,10 @@ Room.prototype.getStream = function() {
   this.watchers.push(s)
   game.emit('set:watchers', this.watchers.length)
   return s
+}
+
+Room.prototype.activate = function () {
+  console.log('activate')
 }
 
 exports.Room = Room
