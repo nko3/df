@@ -128,7 +128,9 @@ body {
 }
 .play-wrap .timer,
 .play-wrap .play,
-.play-wrap .button-start {
+.play-wrap .button-start,
+.play-wrap .button-start-nopeople,
+.play-wrap .button-start-notmaster {
   display: none;
 }
 .starttime .play-wrap .timer {

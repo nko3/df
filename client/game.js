@@ -68,6 +68,19 @@ exports.init = function(mx, room) {
       !game.myId && game.active.length < game.limit
     )
   })
+  game.on('update:start-btn', function() {
+    el.find('.button-start').toggle(
+      game.state == 'pending' && game.master == game.myId &&
+      !!game.master && game.active.length >= 2
+    )
+    el.find('.button-start-nopeople').toggle(
+      game.state == 'pending' && game.active.length < 2
+    )
+    el.find('.button-start-notmaster').toggle(
+      game.state == 'pending' && game.master != game.myId &&
+      !!game.master && game.active.length >= 2
+    )
+  })
 
   game.on('init', function(data) {
     //data -> {name, limit}
@@ -81,12 +94,15 @@ exports.init = function(mx, room) {
     el.find('.result-net-content .names').empty()
     el.find('.result-net-content .packets').empty()
     game.emit('update:btn-join')
+    game.emit('update:start-btn')
   })
   game.on('set:state', function(state) {
     //state -> (pending, active, end)
     $('#cont').attr('class', 'state-'+state)
     if (state == 'end')
       el.find('.player').removeClass('current')
+      
+    game.emit('update:start-btn')
   })
   game.on('set:watchers', function(count) {
     el.find('.watchers').text(count)
@@ -99,16 +115,22 @@ exports.init = function(mx, room) {
     el.find('.board').append($player({player: player}))
     game.renderPlayers()
     game.emit('update:btn-join')
+    game.emit('update:start-btn')
   })
   game.on('del:player', function(playerId) {
     el.find('.players-joined').text(game.active.length)
     el.find('#player'+playerId).remove()
     game.renderPlayers()
     game.emit('update:btn-join')
+    game.emit('update:start-btn')
   })
 
   game.on('set:master', function(playerId) {
     // master player has right to start the game.
+    game.emit('update:start-btn')
+    el.find('.button-start-notmaster .mastername').text(
+      game.players[playerId].name
+    )
   })
   game.on('set:starttime', function(time) {
     //in seconds
