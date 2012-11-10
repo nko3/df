@@ -26,7 +26,7 @@ function Game() {
       watchers: self.watchers
     })
     self.active.forEach(function(id) {
-      copy.emit('add:player', self.players[id])
+      copy.emit('add:player', id)
     })
     for (var id in self.players) {
       if (-1 == self.active.indexOf(id)) {
