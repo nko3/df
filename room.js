@@ -13,11 +13,27 @@ kv.has('rooms', function(err, stat){
 function Room(data) {
   this.game = new Game()
   this.game.emit('init', data)
+  
+  this.watchers = []
+  
+  this.game.on('set:watchers', function(count) {
+    rooms.emit('set:watchers', data.id, count)
+  })
+  
+  this.game.emit('set:watchers', 0)
 }
 
 Room.prototype.getStream = function() {
+  var self = this
   var game = this.game
   var s = game.replicateStream()
+  s.on('end', function() {
+    var ix = self.watchers.indexOf(s)
+    self.watchers.splice(ix, 1)
+    game.emit('set:watchers', self.watchers.length)
+  })
+  this.watchers.push(s)
+  game.emit('set:watchers', this.watchers.length)
   return s
 }
 
