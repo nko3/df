@@ -1,4 +1,5 @@
 $font_size = 16px
+$font_size_small = $font_size - 4
 $font_size_big = $font_size + 4
 
 border-radius($border_radius = 5px)
@@ -99,7 +100,7 @@ $header_height = 50px
     border-radius()
     box()
     float left
-    height ($h = 314px)
+    min-height ($h = 314px)
     margin-left 9px
     padding 10px
     width $h
@@ -122,8 +123,7 @@ $header_height = 50px
   .button-join
   .button-solve
     display none
-  
-    
+
 .play-wrap
   .timer
   .play
@@ -135,3 +135,12 @@ $header_height = 50px
   .state-active &
     .play
       display block
+
+.result-wrap
+  table
+    width 100%
+  td
+    font-size $font_size_small
+.result-cpu
+  td
+    width 25%
