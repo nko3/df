@@ -25,6 +25,9 @@ console.log('Server started at http://localhost:' + conf.port)
 app.get('/', function(req, res) {
   res.render('fp')
 })
+app.get('/p/:room', function(req, res) {
+  res.sendfile(__dirname + '/static/game.html')
+})
 
 var rooms = require('./data/rooms')
 var kv = require('kv')('/tmp/kv')

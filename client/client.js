@@ -27,10 +27,15 @@ $(function() {
 
 });
 
+var router = require('./router')
+
 rooms.on('add:room', function(r) {
   var $room = require('../views/room.jade')
   var el = $($room(r))
-  el.id = 'room-' + r.id
+  el.attr('id', 'room-' + r.id)
+  el.find('.open').on('click', function() {
+    router.navigate('/p/' + r.id)
+  })
   $('#cont').append(el)
 })
 
@@ -45,6 +50,21 @@ rooms.on('set:watchers', function(count) {
 rooms.on('set:joined', function(count) {
   $('#room-' + id).find('.players > .joined').text(count)
 })
+
+$(function(){
+  router.init()
+})
+
+router.addRoute('/game.html', function() {
+  console.log('open main');
+  return {}
+})
+
+router.addRoute('/p/:room', function(d) {
+  console.log('open room', d.room)
+  return {}
+})
+
 
 global.addRoom = function (data) {
   $.ajax({

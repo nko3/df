@@ -27,7 +27,8 @@
     "through": "~1.1.1",
     "reconnect": "~0.2.0",
     "kv": "~1.0.5",
-    "monotonic-timestamp": "0.0.7"
+    "monotonic-timestamp": "0.0.7",
+    "routes": "~0.1.1"
   },
   "engines": {
     "node": "0.8.x"
