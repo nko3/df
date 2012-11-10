@@ -30,6 +30,7 @@ game.on('init', function(data) {
   //data -> {name, limit}
   el.find('.name').text(data.name)
   el.find('.players > .limit').text(data.limit)
+  el.find('.board').empty()
 })
 game.on('set:state', function(state) {
   //state -> (pending, active, end)
@@ -78,5 +79,6 @@ global.test = function(num) {
   var tests = {1: require('./test1')}
   var g = new Game()
   g.replicateStream().pipe(mx.createStream({push: 'foo'}))
+  g.emit('clear')
   tests[num](g)
 }
