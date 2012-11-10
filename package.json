@@ -15,6 +15,8 @@
     "url": "git@github.com:nko3/df.git"
   },
   "dependencies": {
+    "express": "~3.0.2",
+    "jade": "~0.27.7"
   },
   "engines": {
     "node": "0.8.x"
