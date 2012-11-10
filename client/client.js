@@ -49,7 +49,7 @@ game.on('add:player', function(player) {
 })
 game.on('del:player', function(playerId) {
   el.find('.players-joined').text(game.active.length)
-  el.find('.board #player'+playerId).remove()
+  el.find('#player'+playerId).remove()
 })
 
 game.on('set:master', function(playerId) {
@@ -68,8 +68,8 @@ game.on('start', function(board) {
 })
 game.on('turn', function(playerId) {
   // move pointer arrow. if playerId == current then show buttons.
-  el.find('.board div').removeClass('current')
-  el.find('.board #player'+playerId).addClass('current')
+  el.find('.player').removeClass('current')
+  el.find('#player'+playerId).addClass('current')
 })
 
 game.on('result:cpu', function(result) {
