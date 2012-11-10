@@ -27,6 +27,7 @@ function Room(data) {
 
 Room.prototype.getStream = function() {
   var self = this
+  var playerId
   var game = this.game
   var s = new MuxDemux(function(s){
     if (s.meta == 'data') {
@@ -36,6 +37,29 @@ Room.prototype.getStream = function() {
       var d = dnode({
         transform: function(s, cb) {
           cb(s.replace(/[aeiou]{2,}/, 'oo').toUpperCase())
+        },
+        join: function (player, cb) {
+          if (!player.name  || !player.name.length) {
+            return cb({msg:'name is required'})
+          }
+          if (game.limit <= game.players.length) {
+            return cb({msg:'room is full'})
+          }
+          playerId = player.id = uniqueId()
+          cb(null, player.id)
+          game.emit('add:player', player)
+          if (!room.master) {
+            game.emit('set:master', player.id)
+          }
+        },
+        setStartTime: function(time, cb) {
+          
+        },
+        sendSolution: function(solution, solveTime, cb) {
+        
+        },
+        increaseTimeout: function(timeout, cb) {
+        
         }
       })
       s.pipe(d).pipe(s)
@@ -45,6 +69,28 @@ Room.prototype.getStream = function() {
   s.on('end', function() {
     var ix = self.watchers.indexOf(s)
     self.watchers.splice(ix, 1)
+    
+    if (playerId) { //only if active
+      game.emit('del:player', playerId)
+      if (game.master == playerId) {
+        if (game.active.length) {
+          var rand = Math.floor(game.active.length * Math.random())
+          game.emit('set:master', game.active[rand])
+        }
+        else {
+          game.emit('set:master', null)
+        }
+      }
+      if (game.players.length < 1) {
+        if (game.state == 'pending') {
+          // clear the start time clock
+        }
+        else if (game.state == 'active') {
+          game.emit('set:state', 'end')
+        }
+      }
+    }
+    
     game.emit('set:watchers', self.watchers.length)
   })
   this.watchers.push(s)
