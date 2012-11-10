@@ -17,6 +17,7 @@ function Room(data) {
   this.game.emit('init', data)
   
   this.watchers = []
+
   
   this.game.on('set:watchers', function(count) {
     rooms.emit('set:watchers', data.id, count)
@@ -70,7 +71,8 @@ Room.prototype.getStream = function() {
           }
         },
         sendSolution: function(solution, solveTime, cb) {
-        
+          self.nextMove()
+          cb(null)
         },
         increaseTimeout: function(timeout, cb) {
         
@@ -119,11 +121,13 @@ Room.prototype.getStream = function() {
 Room.prototype.activate = function () {
   console.log('activate')
   var game = this.game
+  this.boards = {}
   this.getBoard(function(board, solution){
-    self.board = board
+    self.board = self.startboard = board
     self.solution = solution
     game.emit('set:start', board)
     game.emit('set:state', 'active')
+    self.nextMove()
   })
 }
 
@@ -136,6 +140,20 @@ Room.prototype.getBoard = function(cb) {
     })
   })
   sudoku.stdout.pipe(mx)
+}
+
+Room.prototype.nextMove = function() {
+  var index
+  var game = this.game
+  if (game.turn == -1) {
+    index = game.active[Math.floor(game.active.length * Math.random())]
+  }
+  else {
+    index = game.active.indexOf(game.turn)
+    index++
+    if (game.active.length <= index) index = 0
+  }
+  game.emit('set:turn', game.active[index])
 }
 
 exports.Room = Room
