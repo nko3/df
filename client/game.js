@@ -51,6 +51,7 @@ exports.init = function(mx, room) {
   
 
   var game = new Game()
+  var remote
 
   $game = require('../views/game.jade')
   var el = $($game({}))
@@ -131,8 +132,9 @@ exports.init = function(mx, room) {
   
   mux.createStream('data').pipe(game)
   var d = dnode({})
-  d.on('remote', function(remote) {
-    remote.transform('beep', function (s) {
+  d.on('remote', function(r) {
+    global.remote = remote = r
+    r.transform('beep', function (s) {
         console.log('beep => ' + s);
     });
   })

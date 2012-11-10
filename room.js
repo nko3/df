@@ -45,10 +45,13 @@ Room.prototype.getStream = function() {
           if (game.limit <= game.players.length) {
             return cb({msg:'room is full'})
           }
+          if (playerId) {
+            return cb({msg: 'already joined'})
+          }
           playerId = player.id = uniqueId()
           cb(null, player.id)
           game.emit('add:player', player)
-          if (!room.master) {
+          if (!game.master) {
             game.emit('set:master', player.id)
           }
         },
