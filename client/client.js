@@ -54,7 +54,7 @@ $player = require('../views/player.jade')
 game.on('init', function(data) {
   //data -> {name, limit}
   el.find('.name').text(data.name)
-  el.find('.players > .limit').text(data.limit)
+  el.find('.players-limit').text(data.limit)
   el.find('.board').empty()
 })
 game.on('set:state', function(state) {
@@ -64,17 +64,17 @@ game.on('set:state', function(state) {
     el.find('.board div').removeClass('current')
 })
 game.on('set:watchers', function(count) {
-  el.find('.watchers .value').text(count)
+  el.find('.watchers').text(count)
 })
 
 game.on('add:player', function(player) {
   // player -> {id, name, avatar}
-  el.find('.players > .joined').text(game.active.length)
+  el.find('.players-joined').text(game.active.length)
   el.find('.board').append($player({player: player}))
 })
 game.on('del:player', function(playerId) {
-  el.find('.players > .joined').text(game.active.length)
-  el.find('.board #player'+playerId).remove()
+  el.find('.players-joined').text(game.active.length)
+  el.find('#player'+playerId).remove()
 })
 
 game.on('set:master', function(playerId) {
@@ -93,8 +93,8 @@ game.on('start', function(board) {
 })
 game.on('turn', function(playerId) {
   // move pointer arrow. if playerId == current then show buttons.
-  el.find('.board div').removeClass('current')
-  el.find('.board #player'+playerId).addClass('current')
+  el.find('.player').removeClass('current')
+  el.find('#player'+playerId).addClass('current')
 })
 
 game.on('result:cpu', function(result) {
