@@ -30,7 +30,7 @@ rooms.on('del:room', function(id) {
 })
 
 rooms.on('set:watchers', function(id, count) {
-  $('#room-' + id).find('.watchers').text(count)
+  $('#room-' + id).find('.watchers > .count').text(count)
 })
 
 rooms.on('set:joined', function(id, count) {
