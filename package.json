@@ -23,7 +23,9 @@
     "jquery-browserify": "~1.8.1",
     "resourcify": "~0.1.1",
     "shoe": "0.0.7",
-    "mux-demux": "~3.3.4"
+    "mux-demux": "~3.3.4",
+    "through": "~1.1.1",
+    "reconnect": "~0.2.0"
   },
   "engines": {
     "node": "0.8.x"

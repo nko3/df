@@ -1,6 +1,29 @@
 var $ = require('jquery-browserify')
 var Game = require('./game')
 
+var shoe = require('shoe')
+var reconnect = require('reconnect')
+var MuxDemux = require('mux-demux')
+
+var mx
+$(function() {
+reconnect(function (stream) {
+  stream.pipe(mx = MuxDemux()).pipe(stream)
+  
+  var s = mx.createStream({room: 'abc'})
+  s.write('bla bla')
+  s.on('data', function(d) { console.log(d)})
+    
+}).connect('/shoe')
+
+});
+
+
+
+
+
+
+
 var game = new Game()
 
 $game = require('../views/game.jade')
