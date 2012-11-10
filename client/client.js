@@ -3,13 +3,18 @@ var Game = require('./game')
 
 var game = new Game()
 
+$game = require('../views/game.jade')
+var el = $($game({}))
+
 game.on('init', function(data) {
   //data -> {name, limit}
+  el.find('.name').text(data.name)
 })
 game.on('set:state', function(state) {
   //state -> (pending, active, end)
 })
 game.on('set:watchers', function(count) {
+  el.find('.watchers').text(count)
 })
 
 game.on('add:player', function(player) {
@@ -39,9 +44,13 @@ game.on('result:net', function(result) {
   // result -> {playerId, packets}
 })
 
-$game = require('../views/game.jade')
 
 $(function(){
-  $('#cont').html($game({name: 'foo'}))
+  $('#cont').html(el)
   console.log('loaded')
 })
+
+global.test = function(num) {
+  var tests = {1: require('./test1')}
+  tests[num](game)
+}
