@@ -44,10 +44,12 @@ body {
   padding: 0 20px;
   position: relative;
 }
-.header .app-name {
+.header .app,
+.header .name {
   font-size: 20px;
   font-weight: bold;
   line-height: 50px;
+  padding-right: 10px;
 }
 .header .info {
   line-height: 50px;
