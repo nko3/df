@@ -58,6 +58,7 @@ game.on('set:master', function(playerId) {
 game.on('set:starttime', function(time) {
   //in seconds
   $('#cont').addClass('starttime')
+  $('.timer').text(time);
   game.timerInterval = setInterval(function(){$('.timer').text(parseInt($('.timer').text()) - 1)}, 1000)
 })
 game.on('start', function(board) {
