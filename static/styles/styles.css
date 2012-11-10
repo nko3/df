@@ -79,6 +79,18 @@ body {
 .content .col:first-child {
   margin-left: 0;
 }
+.board-wrap .board {
+  background-color: #bbb;
+  border-radius: 50%;
+  height: 200px;
+  position: relative;
+  width: 200px;
+}
+.board-wrap .board .player {
+  left: 0;
+  position: absolute;
+  top: 0;
+}
 .board-wrap .board .current {
   color: #090;
 }

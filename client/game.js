@@ -75,10 +75,12 @@ exports.init = function(mx, room) {
     // player -> {id, name, avatar}
     el.find('.players-joined').text(game.active.length)
     el.find('.board').append($player({player: player}))
+    game.renderPlayers()
   })
   game.on('del:player', function(playerId) {
     el.find('.players-joined').text(game.active.length)
     el.find('#player'+playerId).remove()
+    game.renderPlayers()
   })
 
   game.on('set:master', function(playerId) {
@@ -107,6 +109,17 @@ exports.init = function(mx, room) {
   game.on('result:net', function(result) {
     // result -> {playerId, packets}
   })
+
+  game.renderPlayers = function() {
+    var r = parseInt(el.find('.board').css('width')) / 2;
+    var l = game.active.length
+    var step = Math.PI * 2 / l
+    for (var i = 0; i < l; i++) {
+      el.find('#player'+game.active[i])
+        .css('left', r + Math.round(r * Math.cos(i*step)))
+        .css('top', r + Math.round(r * Math.sin(i*step)))
+    }
+  }
 
   $('#cont').html(el)  
   
