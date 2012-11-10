@@ -11,8 +11,9 @@ Game.prototype.join = function(playerdata, cb) {
   // cb -> f(err, playerId)
 }
 
-Game.prototype.sendSolution = function(solution, cb) {
+Game.prototype.sendSolution = function(solution, solveTime, cb) {
   // solution -> {index1: val1, index2: val2}
+  // solveTime - in milliseconds
   // cb -> f(err)
 }
 
@@ -27,3 +28,5 @@ Game.prototype.increaseTimeout = function(timeout, cb) {
   // cb -> f(err)
 }
 */
+
+module.exports = Game
