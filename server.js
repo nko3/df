@@ -9,13 +9,17 @@ var app = express()
 app.use(express.bodyParser())
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+app.use(express.static(__dirname + '/static'))
+
+var browserify = require('browserify')({watch:true, debug: true})
+browserify.addEntry(__dirname + '/client/client.js')
+app.use(browserify)
+
+
 
 app.listen(conf.port)
 console.log('Server started at http://localhost:' + conf.port)
 
-app.use(express.static(__dirname + '/static'))
-
 app.get('/', function(req, res) {
   res.render('fp')
 })
-
