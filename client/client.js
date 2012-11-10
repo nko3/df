@@ -17,6 +17,7 @@ $(function() {
   reconnect(function (stream) {
     stream.pipe(mx = MuxDemux()).pipe(stream)
     if (DEBUG_ROOM) {
+      $('#cont').empty()
       mx.createStream('main').pipe(rooms)
     }
     else
@@ -44,6 +45,19 @@ rooms.on('set:watchers', function(count) {
 rooms.on('set:joined', function(count) {
   $('#room-' + id).find('.players > .joined').text(count)
 })
+
+global.addRoom = function (data) {
+  $.ajax({
+    type: 'POST',
+    url: '/new',
+    dataType: 'json',
+    data: data
+  }).done(function(data) {
+    console.log('Posted', data);
+  }).fail(function(e) {
+    throw(e)
+  })
+}
 
 if (!DEBUG_ROOM) {
 

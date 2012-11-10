@@ -27,8 +27,16 @@ app.get('/', function(req, res) {
 })
 
 var rooms = require('./data/rooms')
-rooms.emit('add:room', {id: 12, name: 'roomname', 'limit': 5})
-rooms.emit('add:room', {id: 13, name: 'foobar', 'limit': 10})
+
+function uniqueId() {
+  return Math.floor(Math.random() * 1e8).toString(16)
+}
+
+app.post('/new', function(req, res) {
+  req.body.id = uniqueId()
+  rooms.emit('add:room', req.body)
+  res.json(req.body)
+})
 
 
 var Game = new require('./data/game')
