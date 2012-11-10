@@ -65,14 +65,21 @@ function Grid(board) {
 inherits(Grid, EventEmitter)
 
 Grid.prototype.fill = function(items) {
+  var num = 0
   for (var i in items) {
-    var el = this.els[i]
+    var el = $(this.els[i])
     this.active[i] = false
     el.removeClass('active')
+    if (parseInt(items[i]) != parseInt(el.text())){
+      num++
+    }
+    el.text(items[i])
+    if (this.buffer[i]) delete this.buffer[i]
     if (this.active == i) {
       this.emit('set:active', -1)
     }
   }
+  return num
 }
 
 Grid.prototype.input = function(c) {

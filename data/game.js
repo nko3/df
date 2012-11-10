@@ -33,17 +33,22 @@ function Game() {
         copy.emit('add:player', self.players[id], true)
       }
     }
-    if (self.master) {
-      copy.emit('set:master', self.master)
-    }
-    if (self.turn) {
-      copy.emit('set:turn', self.turn)
-    }
+    copy.emit('set:state', self.state)
     if (self.starttime != -1) {
       var diff = self.starttime - (new Date() - self.starttimestamp) / 1000
       if (diff > 0) {
         copy.emit('set:starttime', diff)
       }
+    }
+    if (self.master) {
+      copy.emit('set:master', self.master)
+    }
+    if (self.state != 'pending' && self.board) {
+      copy.emit('start', self.board)
+    } 
+    
+    if (self.turn) {
+      copy.emit('set:turn', self.turn)
     }
     self.cpuresults.forEach(function(c) {
       copy.emit('result:cpu', c)

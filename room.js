@@ -82,8 +82,8 @@ Room.prototype.getStream = function() {
             cb({msg:'can\'t set start time'})
           }
         },
-        sendSolution: function(solution, solveTime, cb) {
-          if (room.turn != playerId) {
+        sendSolution: function(solution, time, cb) {
+          if (game.turn != playerId) {
             return cb({msg: 'timed out'})
           }
           for (var i in solution) {
@@ -92,7 +92,7 @@ Room.prototype.getStream = function() {
             }
           }
           self.boards[playerId] = [].concat(self.board)
-          self.game.emit('result:cpu', {
+          game.emit('result:cpu', {
             playerId: playerId,
             time: time,
             ping: (self.turnTime - new Date()) - time
@@ -156,7 +156,8 @@ Room.prototype.activate = function () {
   var self = this
   this.boards = {}
   this.getBoard(function(board, solution){
-    self.board = self.startboard = board
+    self.board = board
+    self.startboard = [].concat(board)
     self.solution = solution
     game.emit('start', board)
     game.emit('set:state', 'active')
@@ -177,6 +178,7 @@ Room.prototype.getBoard = function(cb) {
 
 Room.prototype.nextMove = function() {
   var index
+  var self = this
   var game = this.game
   if (game.turn == -1) {
     index = game.active[Math.floor(game.active.length * Math.random())]
@@ -187,23 +189,23 @@ Room.prototype.nextMove = function() {
     if (game.active.length <= index) index = 0
   }
   var playerId = game.active[index]
-  var remote = this.remotes[remote]
+  var remote = this.remotes[playerId]
   if (!this.boards[playerId]) {
     this.boards[playerId] = [].concat(this.startboard)
   }
   var diff = this.diff(this.board, this.boards[playerId])
-  if (diff.length) {
+  if (diff.count) {
     // todo: possible lock if connection lost in here
     remote.mixSolution(diff.items, function(err, num) {
       if (num) {
-        game.set('result:net', {playerId: playerId, packets: num})
+        game.emit('result:net', {playerId: playerId, packets: num})
       }
-      game.emit('set:turn', playerId)
+      game.emit('turn', playerId)
       self.turnTime = new Date
     })
   }
   else {
-    game.emit('set:turn', playerId)
+    game.emit('turn', playerId)
     this.turnTime = new Date
   }
 

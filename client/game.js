@@ -84,6 +84,11 @@ exports.init = function(mx, room) {
       !!game.master && game.active.length >= 2
     )
   })
+  game.on('update:solve-btn', function() {
+    el.find('.button-solve').toggle(
+      game.state == 'active' && game.turn == game.myId && !!game.myId
+    );
+  })
 
   game.on('init', function(data) {
     //data -> {name, limit}
@@ -101,11 +106,13 @@ exports.init = function(mx, room) {
   })
   game.on('set:state', function(state) {
     //state -> (pending, active, end)
+    console.log('state', state);
     $('#cont').attr('class', 'state-'+state)
     if (state == 'end')
       el.find('.player').removeClass('current')
       
     game.emit('update:start-btn')
+    game.emit('update:solve-btn')
   })
   game.on('set:watchers', function(count) {
     el.find('.watchers').text(count)
@@ -173,6 +180,7 @@ exports.init = function(mx, room) {
     // move pointer arrow. if playerId == current then show buttons.
     el.find('.player').removeClass('current')
     el.find('#player'+playerId).addClass('current')
+    game.emit('update:solve-btn')
   })
 
   game.on('result:cpu', function(result) {
@@ -240,6 +248,13 @@ exports.init = function(mx, room) {
         }
       })
   })
+  el.find('.button-solve').on('click', function() {
+    remote.sendSolution(game.grid.buffer, 350, function(err, cb) {
+      if (err) {
+        alert(err.msg)
+      }
+    })
+  })
 
   $('#cont').html(el)  
   
@@ -249,8 +264,9 @@ exports.init = function(mx, room) {
   mux.createStream('data').pipe(game)
   var d = dnode({
     mixSolution: function(items, cb) {
-      // TBD
       console.log('mix', items);
+      
+      cb(null, game.grid.fill(items))
     }
   })
   d.on('remote', function(r) {
