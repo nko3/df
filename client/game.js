@@ -55,6 +55,7 @@ exports.init = function(mx, room) {
   
   game.resultCpu = {}
   game.resultNet = {}
+  game.resultNetSum = 0
 
   $game = require('../views/game.jade')
   var el = $($game({}))
@@ -66,10 +67,13 @@ exports.init = function(mx, room) {
     //data -> {name, limit}
     game.resultCpu = {}
     game.resultNet = {}
+    game.resultNetSum = 0
     el.find('.name').text(data.name)
     el.find('.players-limit').text(data.limit)
     el.find('.board').empty()
     el.find('.result-cpu table tbody').empty()
+    el.find('.result-net-content .names').empty()
+    el.find('.result-net-content .packets').empty()
   })
   game.on('set:state', function(state) {
     //state -> (pending, active, end)
@@ -137,22 +141,18 @@ exports.init = function(mx, room) {
 
   game.on('result:net', function(result) {
     // result -> {playerId, packets}
-    var unit = 10
-    if (typeof game.resultNetSum == 'undefined')
-      game.resultNetSum = 0
-    
+    var unit = 5
     var id = result.playerId
     if (typeof game.resultNet[id] == 'undefined') {
       game.resultNet[id] = {sum: result.packets}
-      /*var rowEl = $('div')
-      rowEl.attr('id', 'rownet-'+id)
-      rowEl.addClass('row')
-      rowEl.text(game.players[id].name)
-      el.find('.result-net-content').append(rowEl)*/
+      el.find('.result-net-content .names').append('<div class="row">'+ game.players[id].name +'</div>')
+      el.find('.result-net-content .packets').append('<div class="row" id="rownet-'+ id +'"></div>')
+
     } else {
       game.resultNet[id].sum += result.packets
-      //el.find('#rownet-'+id).append(' '+ result.packets)
     }
+
+    el.find('#rownet-'+id).append('<div class="packet" style="left:'+ (unit * game.resultNetSum) +'px; width:'+ (unit * result.packets) +'px" />')
     game.resultNetSum += result.packets
   })
 

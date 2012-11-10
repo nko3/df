@@ -138,10 +138,14 @@ body {
   display: block;
 }
 .result-wrap table {
+  border-spacing: 0;
   width: 100%;
 }
 .result-wrap td {
   font-size: 12px;
+}
+.result {
+  margin-bottom: 10px;
 }
 .result-cpu td {
   width: 25%;
@@ -150,5 +154,26 @@ body {
   overflow-x: hidden;
 }
 .result-net-content {
-  overflow-x: scroll;
+  font-size: 12px;
+}
+.result-net-content .names {
+  float: left;
+  width: 25%;
+}
+.result-net-content .packets {
+  float: left;
+  overflow-x: auto;
+  width: 75%;
+}
+.result-net-content .row {
+  height: 16px;
+  position: relative;
+}
+.result-net-content .packet {
+  background-color: #900;
+  border-radius: 5px;
+  height: 5px;
+  left: 0;
+  position: absolute;
+  top: 0;
 }

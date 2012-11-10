@@ -138,15 +138,33 @@ $header_height = 50px
 
 .result-wrap
   table
+    border-spacing 0
     width 100%
   td
     font-size $font_size_small
+.result
+  margin-bottom 10px
 .result-cpu
   td
     width 25%
 .result-net
   overflow-x hidden
 .result-net-content
-  overflow-x scroll
-  
-    
+  font-size $font_size_small
+  .names
+    float left
+    width 25%
+  .packets
+    float left
+    overflow-x auto
+    width 75%
+  .row
+    height 16px
+    position relative
+  .packet
+    background-color #900
+    border-radius 5px
+    height 5px
+    left 0
+    position absolute
+    top 0
