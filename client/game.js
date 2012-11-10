@@ -71,8 +71,9 @@ exports.init = function(mx, room) {
     el.find('.watchers').text(count)
   })
 
-  game.on('add:player', function(player) {
+  game.on('add:player', function(player, notactive) {
     // player -> {id, name, avatar}
+    if (notactive) return;
     el.find('.players-joined').text(game.active.length)
     el.find('.board').append($player({player: player}))
     game.renderPlayers()

@@ -34,7 +34,7 @@ function test(game) {
     game.emit('result:cpu', {playerId: 13, time: 500, ping: 250})
     game.emit('result:net', {playerId: 13, packets: 2})
     game.emit('turn', 11)
-  }, 12000)
+  }, 11000)
 
   setTimeout(function() {
     game.emit('result:cpu', {playerId: 11, time: 1250, ping: 200})

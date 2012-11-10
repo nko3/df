@@ -70,11 +70,11 @@ function Game() {
   this.on('add:player', function(player, notactive) {
     self.players[player.id] = player
     if (!notactive) {
-      self.active.push(player.id)
+      self.active.push(player.id.toString())
     }
   })
   this.on('del:player', function(playerId) {
-    var ix = self.active.indexOf(playerId)
+    var ix = self.active.indexOf(playerId.toString())
     if (ix != -1) {
       self.active.splice(ix, 1)
     }
