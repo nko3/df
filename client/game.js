@@ -52,17 +52,22 @@ exports.init = function(mx, room) {
 
   var game = new Game()
   var remote
+  
+  game.resultCpu = {}
 
   $game = require('../views/game.jade')
   var el = $($game({}))
 
   $player = require('../views/player.jade')
+  $rowcpu = require('../views/rowcpu.jade')
 
   game.on('init', function(data) {
     //data -> {name, limit}
+    game.resultCpu = {}
     el.find('.name').text(data.name)
     el.find('.players-limit').text(data.limit)
     el.find('.board').empty()
+    el.find('.result-cpu table tbody').empty()
   })
   game.on('set:state', function(state) {
     //state -> (pending, active, end)
@@ -109,7 +114,25 @@ exports.init = function(mx, room) {
 
   game.on('result:cpu', function(result) {
     // result -> {playerId, time, ping}
+    var id = result.playerId
+    if (typeof game.resultCpu[id] == 'undefined') {
+      game.resultCpu[id] = {
+        sum: result.time,
+        cnt: 1,
+        avg: result.time,
+      }
+      el.find('.result-cpu table tbody').append($($rowcpu({id: id, name: game.players[id].name, data: game.resultCpu[id]})))
+
+    } else {
+      game.resultCpu[id].sum += result.time
+      game.resultCpu[id].cnt += 1
+      game.resultCpu[id].avg = Math.round(game.resultCpu[id].sum / game.resultCpu[id].cnt)
+      el.find('#rowcpu-sum-'+id).text(game.resultCpu[id].sum)
+      el.find('#rowcpu-cnt-'+id).text(game.resultCpu[id].cnt)
+      el.find('#rowcpu-avg-'+id).text(game.resultCpu[id].avg)
+    }
   })
+
   game.on('result:net', function(result) {
     // result -> {playerId, packets}
   })
