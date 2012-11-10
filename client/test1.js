@@ -19,6 +19,7 @@ function test(game) {
   
   setTimeout(function() {
     game.emit('start', new Array(81))
+    game.emit('set:state', 'active')
     game.emit('turn', 12)
   }, 8000)
 
