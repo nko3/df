@@ -1,6 +1,17 @@
+$font_size = 16px
+$font_size_big = $font_size + 4
+
+border-radius($border_radius = 5px)
+  border-radius $border_radius
+
+box()
+  box-sizing border-box
+  -moz-box-sizing border-box
+  -webkit-box-sizing border-box
+
 body
   font-family Helvetica, arial, sans-serif
-  font-size 16px
+  font-size $font_size
 
 .fp
   font-family Helvetica
@@ -28,3 +39,43 @@ body
     text-decoration none
     &:hover
       text-decoration underline
+
+#cont
+  margin 20px auto
+  width 960px
+
+$header_height = 50px
+
+.header
+  background-color #999
+  border-radius()
+  color #fff
+  height $header_height
+  padding 0 20px
+  position relative
+  .app-name
+    font-size $font_size_big
+    font-weight bold
+    line-height $header_height
+  .info
+    line-height $header_height
+    position absolute
+    right 20px
+    top 0
+    .label
+      font-weight bold
+      padding-left 10px
+
+.content
+  padding-top 10px
+  .col
+    background-color #f2f2f2
+    border-radius()
+    box()
+    float left
+    height ($h = 314px)
+    margin-left 9px
+    padding 10px
+    width $h
+  .col:first-child
+    margin-left 0
