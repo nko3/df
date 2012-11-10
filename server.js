@@ -12,6 +12,7 @@ app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/static'))
 
 var browserify = require('browserify')({watch:true, debug: true})
+browserify.use(require('resourcify/jade'))
 browserify.addEntry(__dirname + '/client/client.js')
 app.use(browserify)
 
