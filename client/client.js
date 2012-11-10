@@ -15,7 +15,7 @@ game.on('set:state', function(state) {
   //state -> (pending, active, end)
 })
 game.on('set:watchers', function(count) {
-  el.find('.watchers').text(count)
+  el.find('.watchers .value').text(count)
 })
 
 game.on('add:player', function(player) {
