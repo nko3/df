@@ -61,6 +61,12 @@ exports.init = function(mx, room) {
 
   $player = require('../views/player.jade')
   $rowcpu = require('../views/rowcpu.jade')
+  
+  game.on('update:btn-join', function() {
+    el.find('.button-join').toggle(
+      !game.myId && game.active.length < game.limit
+    )
+  })
 
   game.on('init', function(data) {
     //data -> {name, limit}
@@ -70,6 +76,7 @@ exports.init = function(mx, room) {
     el.find('.players-limit').text(data.limit)
     el.find('.board').empty()
     el.find('.result-cpu table tbody').empty()
+    game.emit('update:btn-join')
   })
   game.on('set:state', function(state) {
     //state -> (pending, active, end)
@@ -87,11 +94,13 @@ exports.init = function(mx, room) {
     el.find('.players-joined').text(game.active.length)
     el.find('.board').append($player({player: player}))
     game.renderPlayers()
+    game.emit('update:btn-join')
   })
   game.on('del:player', function(playerId) {
     el.find('.players-joined').text(game.active.length)
     el.find('#player'+playerId).remove()
     game.renderPlayers()
+    game.emit('update:btn-join')
   })
 
   game.on('set:master', function(playerId) {
@@ -166,6 +175,15 @@ exports.init = function(mx, room) {
         .css('top', r + Math.round(r * Math.sin(i*step)))
     }
   }
+
+  el.find('.button-join .btn').on('click', function() {
+    remote.join({name: $('.button-join > input').val()}, function(err, id) {
+      if (err) {
+        return alert(err.msg)
+      }
+      game.myId = id
+    })
+  })
 
   $('#cont').html(el)  
   

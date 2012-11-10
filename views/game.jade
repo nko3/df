@@ -18,11 +18,17 @@
   .col.board-wrap
     .board
     .button-join
+      input(value="yourname")
+      span.btn Join
     .button-solve
   .col.play-wrap
     .timer
     .play Game active
     .button-start
+      | Start game at
+      input(value="10")
+      seconds
+      .btn Go
   .col.result-wrap
     .result-cpu
       .title CPU Profiler
