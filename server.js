@@ -4,7 +4,8 @@ var MuxDemux = require('mux-demux')
 var through = require('through')
 
 var conf = global.conf = require('rc')(require('./package').name, {
-  port: 3300
+  port: 3300,
+  room_delete_key: 'room_delete_key'
 })
 
 var app = express()
@@ -31,6 +32,10 @@ app.get('/p/:room', function(req, res) {
 var room = require('./room')
 app.post('/new', room.new)
 
+app.get('/' + conf.room_delete_key + '/:room', function(req, res) {
+  room.rooms.emit('del:room', req.params.room)
+  res.end('ok')
+})
 
 shoe(function (sock) {
   var mx = new MuxDemux
