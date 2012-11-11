@@ -70,13 +70,13 @@ function test(game) {
     game.emit('result:net', {playerId: 14, packets: 50})
   }, 17000)
   
-  setTimeout(function() {
+  /*setTimeout(function() {
     game.emit('set:state', 'end')
   }, 18000)
 
   setTimeout(function() {
     game.emit('set:state', 'pending')
-  }, 19000)
+  }, 19000)*/
   
 
 }

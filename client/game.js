@@ -232,7 +232,7 @@ exports.init = function(mx, room) {
       game.resultNet[id].sum += result.packets
     }
 
-    el.find('#rownet-'+id).append('<div class="packet" style="left:'+ (unit * game.resultNetSum) +'px; width:'+ (unit * result.packets) +'px" />')
+    el.find('#rownet-'+id).append('<div class="packet" title="'+ result.packets +'KB" style="left:'+ (unit * game.resultNetSum) +'px; width:'+ (unit * result.packets + 4) +'px" />')
     game.resultNetSum += result.packets
 
     game.renderLeaderboard()
