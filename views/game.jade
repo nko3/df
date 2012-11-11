@@ -15,12 +15,6 @@
       span.value.players-limit
 
 .content
-  .game-over
-    .player-limit
-      | Game ended! Not enough players in the room.
-    .winner
-      | Game ended! KO win for
-      span.winnername [winner]
   .col.board-wrap
     .board
     .button-join
@@ -44,6 +38,12 @@
       | Waiting for
       span.mastername
       | to start the game.
+    .game-over
+      .player-limit
+        | Game ended! Not enough players in the room.
+      .winner
+        | Game ended! KO win for
+        span.winnername [winner]
   .col.result-wrap
     .result.result-cpu
       .title CPU Profiler
