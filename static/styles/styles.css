@@ -66,9 +66,19 @@ input[type="text"] {
   position: relative;
   width: 160px;
 }
-.room .button-open {
+.room .button-open,
+.room .button-add {
   position: absolute;
   bottom: 10px;
+  width: 140px;
+}
+.room .button-add .btn {
+  background-color: #f90;
+}
+.room input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   width: 140px;
 }
 .header {
