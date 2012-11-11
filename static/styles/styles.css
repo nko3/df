@@ -51,8 +51,6 @@ body {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
   height: 160px;
   line-height: 140%;
   float: left;
@@ -100,16 +98,14 @@ body {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
   float: left;
-  min-height: 314px;
-  margin-left: 5px;
+  min-height: 317px;
+  margin-left: 4px;
   padding: 10px;
-  width: 314px;
+  width: 317px;
   position: relative;
 }
-.content .col:first-child {
+.content .col.board-wrap {
   margin-left: 0;
 }
 .board-wrap .board {
@@ -295,7 +291,7 @@ body {
   background: #fee;
   padding: 14px;
   text-align: center;
-  font-size: 22px;
+  font-size: 20px;
   display: none;
 }
 .state-end .game-over {

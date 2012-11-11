@@ -7,11 +7,6 @@ $font_size_big = $font_size + 4
 border-radius($border_radius = 5px)
   border-radius $border_radius
 
-box()
-  box-sizing border-box
-  -moz-box-sizing border-box
-  -webkit-box-sizing border-box
-
 body
   font-family Helvetica, arial, sans-serif
   font-size $font_size
@@ -21,12 +16,12 @@ body
   background #eee
   margin 40px 110px 30px 30px
   padding 30px 50px 120px
-  
+
   h2
     font-size 40px
     margin 50px 0 30px
-    
-  ol 
+
+  ol
     padding-bottom 40px
     li
       padding 8px 0
@@ -36,7 +31,7 @@ body
         color #bbb
         text-decoration line-through
         -webkit-text-decoration-color #c00
-        
+
   a
     color #196dc4
     text-decoration none
@@ -59,7 +54,7 @@ body
 .room
   background-color #f2f2f2
   border-radius()
-  box()
+  box-sizing border-box
   height ($h = 160px)
   line-height 140%
   float left
@@ -100,16 +95,16 @@ $header_height = 50px
   .col
     background-color #f2f2f2
     border-radius()
-    box()
+    box-sizing border-box
     float left
-    min-height ($h = 314px)
-    margin-left 5px
+    min-height ($h = 317px)
+    margin-left 4px
     padding 10px
     width $h
     position relative
-  .col:first-child
+  .col.board-wrap
     margin-left 0
-    
+
 .board-wrap
   .board
     background-color #bbb
@@ -163,7 +158,7 @@ $header_height = 50px
     text-align left
   thead td
     font-weight bold
-  
+
 .result-net
   overflow-x hidden
 .result-net-content
@@ -189,11 +184,11 @@ $header_height = 50px
     left 0
     position absolute
     top 2px
-    
+
 .result-leaderboard
   .sum
     color #900
-    
+
 .tiles
   width 288px
   height 288px
@@ -233,8 +228,8 @@ $header_height = 50px
       background #ffbfbf
       &.active
         color #c00
-      
-      
+
+
 
 .controls
   width 288px
@@ -252,7 +247,7 @@ $header_height = 50px
     &:hover
       background #cfc302
       cursor pointer
-    
+
 .game-over
   border 3px solid #000
   margin-bottom 10px
@@ -260,7 +255,7 @@ $header_height = 50px
   background #fee
   padding 14px
   text-align center
-  font-size 22px
+  font-size $font_size_big
   display none
   .state-end &
     display block
@@ -285,7 +280,7 @@ $header_height = 50px
   display none
   .is-my-move &
     display block
-    
+
 .your-move-notice
   position fixed
   z-index 100
