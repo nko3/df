@@ -63,6 +63,7 @@ exports.init = function(mx, room) {
 
   $player = require('../views/player.jade')
   $rowcpu = require('../views/rowcpu.jade')
+  $rowleaderboard = require('../views/rowleaderboard.jade')
   
   game.on('update:btn-join', function() {
     el.find('.button-join').toggle(
@@ -96,6 +97,7 @@ exports.init = function(mx, room) {
     el.find('.result-cpu table tbody').empty()
     el.find('.result-net-content .names').empty()
     el.find('.result-net-content .packets').empty()
+    el.find('.result-leaderboard table tbody').empty()
     game.emit('update:btn-join')
     game.emit('update:start-btn')
   })
@@ -112,6 +114,7 @@ exports.init = function(mx, room) {
       el.find('.result-cpu table tbody').empty()
       el.find('.result-net-content .names').empty()
       el.find('.result-net-content .packets').empty()
+      el.find('.result-leaderboard table tbody').empty()
     }
       
     game.emit('update:start-btn')
@@ -136,6 +139,8 @@ exports.init = function(mx, room) {
     game.renderPlayers()
     game.emit('update:btn-join')
     game.emit('update:start-btn')
+
+    game.renderLeaderboard()
   })
 
   game.on('set:master', function(playerId) {
@@ -218,6 +223,8 @@ exports.init = function(mx, room) {
       el.find('#rowcpu-cnt-'+id).text(game.resultCpu[id].cnt)
       el.find('#rowcpu-avg-'+id).text(game.resultCpu[id].avg)
     }
+
+    game.renderLeaderboard()
   })
 
   game.on('result:net', function(result) {
@@ -235,6 +242,8 @@ exports.init = function(mx, room) {
 
     el.find('#rownet-'+id).append('<div class="packet" style="left:'+ (unit * game.resultNetSum) +'px; width:'+ (unit * result.packets) +'px" />')
     game.resultNetSum += result.packets
+
+    game.renderLeaderboard()
   })
 
   game.renderPlayers = function() {
@@ -246,6 +255,27 @@ exports.init = function(mx, room) {
         .css('left', r + Math.round(r * Math.cos(i*step)))
         .css('top', r + Math.round(r * Math.sin(i*step)))
     }
+  }
+
+  game.renderLeaderboard = function() {
+    var data = []
+    game.active.forEach(function(id) {
+      var cpu, net
+      if (game.resultCpu[id]) {
+        cpu = game.resultCpu[id].sum / 1000
+        net = game.resultNet[id] ? game.resultNet[id].sum : 0,
+        data.push({
+          name: game.players[id].name,
+          cpu: cpu,
+          net: net,
+          sum: cpu + net
+        })
+      }
+    })
+    data.sort(function(a, b){
+      return a.sum == b.sum ? 0 : (a.sum > b.sum ? 1 : -1)
+    })
+    el.find('.result-leaderboard table tbody').html($($rowleaderboard({data: data})))
   }
 
   el.find('.button-join .btn').on('click', function() {
