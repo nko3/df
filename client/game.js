@@ -417,8 +417,16 @@ exports.init = function(mx, room) {
   d.pipe(mux.createStream('dnode')).pipe(d)
   global.game = game
   
+  var closed
+  mux.on('end', function(){
+    if (!closed) {
+      require('./router').navigate('/')
+    }
+  })
+  
   return {
     dispose: function() {
+      closed = true;
       mux.end()
     }
   }
