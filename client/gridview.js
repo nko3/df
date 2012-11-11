@@ -96,5 +96,11 @@ Grid.prototype.input = function(c) {
   }
 }
 
+Grid.prototype.getSolved = function() {
+  for (var i = 0; i < this.active.length; i++) {
+    if (this.active[i]) return false
+  }
+  return true
+}
 
 exports.Grid =  Grid

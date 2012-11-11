@@ -16,6 +16,7 @@ function Game() {
     self.starttime = -1
     self.board = null
     self.turn = null
+    self.solved = false
     self.cpuresults = []
     self.netresults = []
   })
@@ -32,6 +33,9 @@ function Game() {
       if (-1 == self.active.indexOf(id)) {
         copy.emit('add:player', self.players[id], true)
       }
+    }
+    if (self.solved) {
+      copy.emit('set:solved', self.solved)
     }
     copy.emit('set:state', self.state)
     if (self.starttime != -1) {
@@ -68,6 +72,7 @@ function Game() {
   this.on('set:state', function(state) {
     self.state = state
     if (state == 'pending') {
+      self.solved = false
       self.board = null
       self.cpuresults = []
       self.netresults = []
@@ -109,6 +114,9 @@ function Game() {
   })
   this.on('turn', function(playerId) {
     self.turn = playerId
+  })
+  this.on('set:solved', function(bool) {
+    self.solved = bool
   })
 
   this.on('result:cpu', function(result) {
