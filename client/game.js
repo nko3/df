@@ -413,9 +413,6 @@ exports.init = function(mx, room) {
   })
   d.on('remote', function(r) {
     global.remote = remote = r
-    r.transform('beep', function (s) {
-        console.log('beep => ' + s);
-    })
   })
   d.pipe(mux.createStream('dnode')).pipe(d)
   global.game = game

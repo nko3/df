@@ -72,9 +72,6 @@ Room.prototype.getStream = function() {
     }
     else if (s.meta == 'dnode') {
       var d = dnode({
-        transform: function(s, cb) {
-          cb(s.replace(/[aeiou]{2,}/, 'oo').toUpperCase())
-        },
         join: function (player, cb) {
           if (!player.name  || !player.name.length) {
             return cb({msg:'name is required'})
