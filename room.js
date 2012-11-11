@@ -124,6 +124,9 @@ Room.prototype.getStream = function() {
     self.watchers.splice(ix, 1)
     
     if (playerId) { //only if active
+      if (game.turn == playerId && game.active.length > 2) {
+        self.nextMove()
+      }
       game.emit('del:player', playerId)
       if (game.master == playerId) {
         if (game.active.length) {
