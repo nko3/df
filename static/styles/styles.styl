@@ -7,11 +7,6 @@ $font_size_big = $font_size + 4
 border-radius($border_radius = 5px)
   border-radius $border_radius
 
-box()
-  box-sizing border-box
-  -moz-box-sizing border-box
-  -webkit-box-sizing border-box
-
 body
   font-family Helvetica, arial, sans-serif
   font-size $font_size
@@ -59,7 +54,7 @@ body
 .room
   background-color #f2f2f2
   border-radius()
-  box()
+  box-sizing border-box
   height ($h = 160px)
   line-height 140%
   float left
@@ -100,7 +95,7 @@ $header_height = 50px
   .col
     background-color #f2f2f2
     border-radius()
-    box()
+    box-sizing border-box
     float left
     min-height ($h = 314px)
     margin-left 5px
