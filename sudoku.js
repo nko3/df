@@ -12,7 +12,7 @@ var empty = puzzle.reduce(function(memo, val){
 }, 0)
 
 
-while (empty > 10) {
+while (empty > 25) {
   var rand = Math.floor(Math.random() * 81)
   if (puzzle[rand] != null) continue;
   
