@@ -332,6 +332,9 @@ exports.init = function(mx, room) {
       game.grid.fill(items)
     })
   })
+  el.find('.button-rooms .btn').on('click', function() {
+    require('./router').navigate('/game.html')
+  })
 
   $('#cont').html(el)  
   

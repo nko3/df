@@ -453,3 +453,25 @@ input[type="text"] {
   -ms-transition-property: -webkit-transform, -moz-transform;
   transition-property: -webkit-transform, -moz-transform;
 }
+.footer-wrap {
+  bottom: 0;
+  position: fixed;
+  left: 0;
+  width: 100%;
+}
+.footer-wrap .footer {
+  height: 30px;
+  margin: 10px auto;
+  width: 960px;
+}
+.footer-wrap .footer .btn {
+  background-color: #aaa;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.footer-wrap .footer .button-rooms {
+  float: left;
+}
+.footer-wrap .footer .button-help {
+  float: right;
+}
