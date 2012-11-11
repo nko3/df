@@ -173,26 +173,47 @@ $content_col_w = $content_col_h
 .result
   margin-bottom 10px
   .title
-    border-bottom 1px solid #ccc
     font-weight bold
     line-height 100%
-    margin-bottom 5px
+    margin-bottom 2px
   table
+    background-color #ddd
+    border-radius(3px)
     border-spacing 0
-    width 100%
-  td
+    display none
     font-size $font_size_small
-    text-align right
-    width 25%
-  td.name
-    text-align left
-  thead td
-    font-weight bold
+    padding 4px
+    width 100%
+    td
+      text-align right
+      width 25%
+    td.name
+      text-align left
+    thead td
+      font-weight bold
+  .no-result
+    background-color #ddd
+    border-radius(3px)
+    font-size $font_size_small
+    padding 4px
+  &.has-result
+    .no-result
+      display none
+    table
+      display table
+    .result-net-content
+      display block
 
 .result-net
   overflow-x hidden
 .result-net-content
+  background-color #ddd
+  border-radius(3px)
+  display none
   font-size $font_size_small
+  float left
+  padding 4px
+  width 100%
   .names
     float left
     padding-top 2px

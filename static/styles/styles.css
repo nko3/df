@@ -189,31 +189,55 @@ input[type="text"] {
   margin-bottom: 10px;
 }
 .result .title {
-  border-bottom: 1px solid #ccc;
   font-weight: bold;
   line-height: 100%;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 }
 .result table {
+  background-color: #ddd;
+  border-radius: 3px;
   border-spacing: 0;
+  display: none;
+  font-size: 12px;
+  padding: 4px;
   width: 100%;
 }
-.result td {
-  font-size: 12px;
+.result table td {
   text-align: right;
   width: 25%;
 }
-.result td.name {
+.result table td.name {
   text-align: left;
 }
-.result thead td {
+.result table thead td {
   font-weight: bold;
+}
+.result .no-result {
+  background-color: #ddd;
+  border-radius: 3px;
+  font-size: 12px;
+  padding: 4px;
+}
+.result.has-result .no-result {
+  display: none;
+}
+.result.has-result table {
+  display: table;
+}
+.result.has-result .result-net-content {
+  display: block;
 }
 .result-net {
   overflow-x: hidden;
 }
 .result-net-content {
+  background-color: #ddd;
+  border-radius: 3px;
+  display: none;
   font-size: 12px;
+  float: left;
+  padding: 4px;
+  width: 100%;
 }
 .result-net-content .names {
   float: left;

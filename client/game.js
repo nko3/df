@@ -216,6 +216,7 @@ exports.init = function(mx, room) {
     game.resultCpu = {}
     game.resultNet = {}
     game.resultNetSum = 0
+    el.find('.result').removeClass('has-result')
   }
 
   game.on('result:cpu', function(result) {
@@ -238,6 +239,8 @@ exports.init = function(mx, room) {
       el.find('#rowcpu-avg-'+id).text(game.resultCpu[id].avg)
     }
 
+    el.find('.result-cpu').addClass('has-result')
+
     game.renderLeaderboard()
   })
 
@@ -257,6 +260,8 @@ exports.init = function(mx, room) {
     el.find('#rownet-'+id).append('<div class="packet" title="'+ result.packets +'KB" style="left:'+ (unit * game.resultNetSum) +'px; width:'+ (unit * result.packets + 4) +'px" />')
     game.resultNetSum += result.packets
 
+    el.find('.result-net').addClass('has-result')
+    
     game.renderLeaderboard()
   })
 
@@ -300,6 +305,7 @@ exports.init = function(mx, room) {
     })
     game.leader = data.length ? data[0].id : ''
     el.find('.result-leaderboard table tbody').html($($rowleaderboard({data: data})))
+    el.find('.result-leaderboard').addClass('has-result')
   }
 
   el.find('.button-join .btn').on('click', function() {
