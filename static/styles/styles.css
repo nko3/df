@@ -183,6 +183,7 @@ body {
   width: 288px;
   height: 288px;
   border: 3px solid #333;
+  border-radius: 5px;
 }
 .tiles .tile,
 .controls .control {
@@ -224,6 +225,14 @@ body {
 .controls .control {
   border-right-width: 2px;
 }
+.tiles .tile.error,
+.controls .control {
+  background: #fc8b8b;
+}
+.tiles .tile.error.active,
+.controls .control {
+  color: #900;
+}
 .controls {
   width: 288px;
   margin-top: 20px;
@@ -236,8 +245,8 @@ body {
 }
 .controls .control {
   background: #fffec2;
-  color: #000;
-  border-color: #333;
+  color: #665438;
+  border-color: #dcb569;
 }
 .controls .control:hover {
   background: #cfc302;
