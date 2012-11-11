@@ -173,7 +173,7 @@ exports.init = function(mx, room) {
   game.on('start', function(board) {
     // board -> Array(81)
     game.stopStartTimer()
-    game.grid = new Grid(board)
+    game.grid = new Grid(game, board)
     el.find('.play').empty().append(game.grid.el)
     console.log('got board', board)
   })

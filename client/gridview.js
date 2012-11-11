@@ -1,8 +1,9 @@
 var EventEmitter = require('events').EventEmitter
 var inherits = require('util').inherits
 
-function Grid(board) {
+function Grid(game, board) {
   EventEmitter.call(this)
+  this.game = game
   
   var $grid = require('../views/grid.jade')
   var el = this.el = $($grid())
@@ -32,7 +33,12 @@ function Grid(board) {
   })
   
   tiles.find('.tile.active').live('click', function(e){
-    self.emit('set:active', self.els.indexOf(e.target))
+    if (self.game.myId) {
+      self.emit('set:active', self.els.indexOf(e.target))
+    }
+    else {
+      alert('You have to join before you can play along')
+    }
   })
   
   var controls = $(el[1])
