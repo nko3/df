@@ -53,10 +53,6 @@ exports.init = function(mx, room) {
 
   var game = new Game()
   var remote
-  
-  game.resultCpu = {}
-  game.resultNet = {}
-  game.resultNetSum = 0
 
   $game = require('../views/game.jade')
   var el = $($game({}))
@@ -93,9 +89,7 @@ exports.init = function(mx, room) {
 
   game.on('init', function(data) {
     //data -> {name, limit}
-    game.resultCpu = {}
-    game.resultNet = {}
-    game.resultNetSum = 0
+    game.initResult()
     el.find('.name').text(data.name)
     el.find('.players-limit').text(data.limit)
     el.find('.board').empty()
@@ -116,6 +110,7 @@ exports.init = function(mx, room) {
       el.find('.player').removeClass('current')
     }
     else if (state == 'pending') {
+      game.initResult()
       el.find('.result-cpu table tbody').empty()
       el.find('.result-net-content .names').empty()
       el.find('.result-net-content .packets').empty()
@@ -195,6 +190,12 @@ exports.init = function(mx, room) {
     el.find('#player'+playerId).addClass('current')
     game.emit('update:solve-btn')
   })
+
+  game.initResult = function() {
+    game.resultCpu = {}
+    game.resultNet = {}
+    game.resultNetSum = 0
+  }
 
   game.on('result:cpu', function(result) {
     // result -> {playerId, time, ping}
