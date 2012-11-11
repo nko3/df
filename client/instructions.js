@@ -8,6 +8,9 @@ exports.open = function() {
   d = dialog(el)
   page1()
   
+  
+  window.localStorage.setItem('instuctions_open', true)
+  
 }
 
 function page1() {

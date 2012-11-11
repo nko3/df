@@ -40,4 +40,8 @@ $(function(){
     require('./instructions').open()
   })
   
+  if (!window.localStorage.getItem('instuctions_open')){
+    require('./instructions').open()
+  }
+  
 })
