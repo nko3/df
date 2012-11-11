@@ -50,11 +50,6 @@ shoe(function (sock) {
       if (r) s.pipe(r.getStream()).pipe(s)
       else s.end()
     }
-    else if (s.meta.push) {
-      r = room.getInstance(s.meta.push)
-      if (r) s.pipe(r.game)
-      else s.end()
-    }
   })
   mx.pipe(sock).pipe(mx)
 }).install(server, '/shoe')

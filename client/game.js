@@ -47,8 +47,8 @@ var Grid = require('./gridview').Grid
 
 
 exports.init = function(mx, room) {
-  global.room = room;
-  global.mx = mx
+  //global.room = room;
+  //global.mx = mx
   
 
   var game = new Game()
@@ -429,7 +429,7 @@ exports.init = function(mx, room) {
 
 
 
-
+/*
 global.test = function(num) {
   var tests = {1: require('./test1')}
   var g = new Game()
@@ -438,3 +438,4 @@ global.test = function(num) {
   tests[num](g)
 }
 
+*/
