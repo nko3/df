@@ -8,8 +8,15 @@ border-radius($border_radius = 5px)
   border-radius $border_radius
 
 body
+  color #000
   font-family Helvetica, arial, sans-serif
   font-size $font_size
+
+input[type="text"]
+  background-color #fff
+  border 1px solid #ccc
+  border-radius(3px)
+  padding 5px 5px
 
 .fp
   font-family Helvetica
@@ -42,7 +49,7 @@ body
   margin 20px auto
   width 960px
 
-.button
+.btn
   background-color #090
   border-radius()
   cursor pointer
@@ -62,7 +69,7 @@ body
   padding 10px
   position relative
   width $h
-  .button
+  .button-open
     position absolute
     bottom 10px
     width $h - 2*10
@@ -90,6 +97,8 @@ $header_height = 50px
       font-weight bold
       padding-left 10px
 
+$content_col_h = 317px
+$content_col_w = $content_col_h
 .content
   padding-top 10px
   .col
@@ -97,10 +106,11 @@ $header_height = 50px
     border-radius()
     box-sizing border-box
     float left
-    min-height ($h = 317px)
+    min-height $content_col_h
     margin-left 4px
     padding 10px
-    width $h
+    position relative
+    width $content_col_w
   .col.board-wrap
     margin-left 0
     
@@ -120,6 +130,9 @@ $header_height = 50px
   .button-join
   .button-solve
     display none
+    position absolute
+    bottom 10px
+    width $content_col_w - 2*10
 
 .is-my-move
   .button-solve
@@ -138,6 +151,20 @@ $header_height = 50px
   .state-active &
     .play
       display block
+  .mastername
+  .winnername
+  .timer
+    font-weight bold
+    padding 0 5px
+  .button-start
+    input[type="text"]
+      margin 0 5px
+      text-align center
+      width 20px
+    .btn
+      margin-top 5px
+  .timer-cont
+    margin-bottom 20px
 
 .result
   margin-bottom 10px
