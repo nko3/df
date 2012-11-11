@@ -140,37 +140,54 @@ $header_height = 50px
     .play
       display block
 
-.result-wrap
+.result
+  margin-bottom 10px
+  .title
+    border-bottom 1px solid #ccc
+    font-weight bold
+    line-height 100%
+    margin-bottom 5px
   table
     border-spacing 0
     width 100%
   td
     font-size $font_size_small
-.result
-  margin-bottom 10px
-  td
+    text-align right
     width 25%
+  td.name
+    text-align left
+  thead td
+    font-weight bold
+  
 .result-net
   overflow-x hidden
 .result-net-content
   font-size $font_size_small
   .names
     float left
+    padding-top 2px
     width 25%
   .packets
     float left
     overflow-x auto
+    padding-top 2px
     width 75%
   .row
     height 16px
+    line-height 16px
     position relative
   .packet
-    background-color #900
-    border-radius 5px
-    height 5px
+    background-color #84b6ff
+    border-radius 4px
+    height 10px
+    line-height 16px
     left 0
     position absolute
-    top 0
+    top 2px
+    
+.result-leaderboard
+  .sum
+    color #900
     
 .tiles
   width 288px

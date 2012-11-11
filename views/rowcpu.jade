@@ -1,5 +1,10 @@
 tr(id='rowcpu-#{id}')
-  td #{name}
-  td(id='rowcpu-sum-#{id}') #{data.sum}
-  td(id='rowcpu-cnt-#{id}') #{data.cnt}
-  td(id='rowcpu-avg-#{id}') #{data.avg}
+  td.name #{name}
+  td
+    span(id='rowcpu-sum-#{id}') #{data.sum}
+    span ms
+  td
+    span(id='rowcpu-cnt-#{id}') #{data.cnt}
+  td
+    span(id='rowcpu-avg-#{id}') #{data.avg}
+    span ms

@@ -143,18 +143,29 @@ body {
 .state-active .play-wrap .play {
   display: block;
 }
-.result-wrap table {
-  border-spacing: 0;
-  width: 100%;
-}
-.result-wrap td {
-  font-size: 12px;
-}
 .result {
   margin-bottom: 10px;
 }
+.result .title {
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
+  line-height: 100%;
+  margin-bottom: 5px;
+}
+.result table {
+  border-spacing: 0;
+  width: 100%;
+}
 .result td {
+  font-size: 12px;
+  text-align: right;
   width: 25%;
+}
+.result td.name {
+  text-align: left;
+}
+.result thead td {
+  font-weight: bold;
 }
 .result-net {
   overflow-x: hidden;
@@ -164,24 +175,31 @@ body {
 }
 .result-net-content .names {
   float: left;
+  padding-top: 2px;
   width: 25%;
 }
 .result-net-content .packets {
   float: left;
   overflow-x: auto;
+  padding-top: 2px;
   width: 75%;
 }
 .result-net-content .row {
   height: 16px;
+  line-height: 16px;
   position: relative;
 }
 .result-net-content .packet {
-  background-color: #900;
-  border-radius: 5px;
-  height: 5px;
+  background-color: #84b6ff;
+  border-radius: 4px;
+  height: 10px;
+  line-height: 16px;
   left: 0;
   position: absolute;
-  top: 0;
+  top: 2px;
+}
+.result-leaderboard .sum {
+  color: #900;
 }
 .tiles {
   width: 288px;
