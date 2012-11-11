@@ -21,9 +21,11 @@ function Rooms() {
     })
   })
   this.on('set:watchers', function (id, count) {
+    if (self.getRoom(id))
     self.getRoom(id).watchers = count
   })
   this.on('set:joined', function (id, count) {
+    if (self.getRoom(id))
     self.getRoom(id).joined = count
   })
 

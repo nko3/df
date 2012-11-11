@@ -633,7 +633,7 @@ input[type="text"] {
   top: 0;
   width: 80%;
   height: 520px;
-  font-size: 18px;
+  font-size: 16px;
 }
 .instructions-cont a {
   color: #1163d2;
@@ -666,7 +666,7 @@ input[type="text"] {
   float: left;
 }
 .instructions-cont .page2 .img2 {
-  width: 250px;
+  width: 220px;
   height: 230px;
   background: url("../img/sudoku.png") no-repeat;
   -webkit-background-size: 220px;
@@ -682,6 +682,10 @@ input[type="text"] {
   clear: left;
   padding-left: 20px;
 }
+.instructions-cont .page2 .protip {
+  font-size: 15px;
+  font-weight: bold;
+}
 .instructions-cont .page3 .img {
   background: url("../img/stats.png") no-repeat;
   float: right;
@@ -691,4 +695,8 @@ input[type="text"] {
   -webkit-background-size: 340px;
   -moz-background-size: 340px;
   background-size: 340px;
+}
+.instructions-cont .page3 .protip {
+  font-size: 15px;
+  font-weight: bold;
 }
