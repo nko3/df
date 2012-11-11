@@ -116,7 +116,7 @@ exports.init = function(mx, room) {
     }
       
     game.emit('update:start-btn')
-    el.find('.button-solve').hide()
+    el.removeClass('is-my-move')
   })
   game.on('set:watchers', function(count) {
     el.find('.watchers').text(count)
@@ -190,15 +190,15 @@ exports.init = function(mx, room) {
     if (game.state == 'active' && game.turn == game.myId && !!game.myId) {
       var checksolved = game.grid.getSolved()
       if (!checksolved) {
-        el.find('.button-solve').show()
+        el.addClass('is-my-move')
       }
       else {
-        el.find('.button-solve').hide()
+        el.removeClass('is-my-move')
         remote.sendSolution({}, 2000, function(err, items) {})
       }
     }
     else {
-      el.find('.button-solve').hide()
+      el.removeClass('is-my-move')
     }
   })
 

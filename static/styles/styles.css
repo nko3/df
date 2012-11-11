@@ -126,6 +126,9 @@ body {
 .board-wrap .button-solve {
   display: none;
 }
+.is-my-move .button-solve {
+  display: block;
+}
 .play-wrap .timer-cont,
 .play-wrap .play,
 .play-wrap .button-start,

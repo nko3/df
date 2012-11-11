@@ -52,7 +52,7 @@ function Game() {
     } 
     
     if (self.turn) {
-      copy.emit('set:turn', self.turn)
+      copy.emit('turn', self.turn)
     }
     self.cpuresults.forEach(function(c) {
       copy.emit('result:cpu', c)
