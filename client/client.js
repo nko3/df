@@ -18,7 +18,7 @@ $(function() {
 var router = require('./router')
 
 
-router.addRoute('/game.html', function() {
+router.addRoute('/', function() {
   console.log('open main');
   return require('./rooms').init(mx)
 })
@@ -33,7 +33,7 @@ $(function(){
   $(document.body).append(require('../views/footer.jade')())
   
   $('.button-rooms .btn').on('click', function() {
-    router.navigate('/game.html')
+    router.navigate('/')
   })
   
   $('.button-help .btn').on('click', function() {

@@ -14,7 +14,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/static'))
 
-var browserify = require('browserify')({watch:true, debug: true})
+var browserify = require('browserify')({debug: true})
 browserify.use(require('resourcify/jade'))
 browserify.addEntry(__dirname + '/client/client.js')
 app.use(browserify)
@@ -22,8 +22,9 @@ app.use(browserify)
 var server = app.listen(conf.port)
 console.log('Server started at http://localhost:' + conf.port)
 
+
 app.get('/', function(req, res) {
-  res.render('fp')
+  res.sendfile(__dirname + '/static/game.html')
 })
 app.get('/p/:room', function(req, res) {
   res.sendfile(__dirname + '/static/game.html')

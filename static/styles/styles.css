@@ -425,20 +425,23 @@ input[type="text"] {
 .controls {
   width: 288px;
   margin-top: 20px;
-  border: 2px solid #f0e80b;
+  border: 2px solid #b9b788;
   height: 32px;
   display: none;
+  border-radius: 5px;
 }
 .controls.visible {
   display: block;
 }
 .controls .control {
-  background: #fffec2;
+  background: #f0f0db;
   color: #665438;
-  border-color: #dcb569;
+  padding-top: 2px;
+  font-size: 16;
+  border-color: #a29170;
 }
 .controls .control:hover {
-  background: #cfc302;
+  background: #eee77e;
   cursor: pointer;
 }
 .game-over {
