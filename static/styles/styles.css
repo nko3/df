@@ -555,6 +555,24 @@ input[type="text"] {
 .footer-wrap .footer .button-help {
   float: right;
 }
+.footer-wrap .footer .share {
+  float: left;
+  font-size: 12px;
+  color: #666;
+  width: 260px;
+  margin-left: 40px;
+}
+.footer-wrap .footer .share .lbl {
+  text-align: right;
+  float: left;
+  padding-right: 7px;
+  width: 150px;
+}
+.footer-wrap .footer .nko {
+  float: left;
+  padding-top: 1px;
+  margin-left: 30px;
+}
 .dialog-overlay {
   background-color: #333;
   height: 100%;
