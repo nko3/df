@@ -182,7 +182,7 @@ body {
 .tiles {
   width: 288px;
   height: 288px;
-  border: 2px solid #000;
+  border: 3px solid #333;
 }
 .tiles .tile,
 .controls .control {
@@ -191,21 +191,38 @@ body {
   height: 32px;
   font-size: 26px;
   text-align: center;
-  border: 1px solid #666;
+  border: 1px solid #444;
   box-sizing: border-box;
-  color: #555;
+  color: #444;
 }
 .tiles .tile.active,
 .controls .control {
   background: #fff;
-  color: #000;
+  color: #00a;
+  border: 1px solid #000;
 }
 .tiles .tile.active:hover,
 .controls .control,
 .tiles .tile.active.selected,
 .controls .control {
-  border: 1px solid #c00;
+  border-color: #c00;
   background: #fee;
+}
+.tiles .tile.bb,
+.controls .control {
+  border-bottom-width: 2px;
+}
+.tiles .tile.bt,
+.controls .control {
+  border-top-width: 2px;
+}
+.tiles .tile.bl,
+.controls .control {
+  border-left-width: 2px;
+}
+.tiles .tile.br,
+.controls .control {
+  border-right-width: 2px;
 }
 .controls {
   width: 288px;
@@ -219,6 +236,8 @@ body {
 }
 .controls .control {
   background: #fffec2;
+  color: #000;
+  border-color: #333;
 }
 .controls .control:hover {
   background: #cfc302;

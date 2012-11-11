@@ -67,6 +67,23 @@ function Grid(game, board) {
     self.input(String.fromCharCode(e.keyCode))
   })
   
+  ;[18, 45].forEach(function(i) {
+    for (var j = 0; j < 9; j++)
+      $(self.els[i + j]).addClass('bb')
+  })
+  ;[27, 54].forEach(function(i) {
+    for (var j = 0; j < 9; j++)
+      $(self.els[i + j]).addClass('bt')
+  })
+  ;[2, 5].forEach(function(i) {
+    for (var j = 0; j < 9; j++)
+      $(self.els[i + j * 9]).addClass('br')
+  })
+  ;[3, 6].forEach(function(i) {
+    for (var j = 0; j < 9; j++)
+      $(self.els[i + j * 9]).addClass('bl')
+  })
+  
 }
 inherits(Grid, EventEmitter)
 
