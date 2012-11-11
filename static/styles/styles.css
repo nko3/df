@@ -392,18 +392,20 @@ input[type="text"] {
   display: block;
 }
 .your-move-notice {
-  position: fixed;
+  position: absolute;
   z-index: 100;
-  background: #e00;
+  background: #900;
+  border-radius: 5px;
   color: #fff;
   padding: 5px 10px;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 100%;
   left: 50%;
   width: 250px;
-  margin-left: -130px;
-  top: 25px;
+  margin-left: -135px;
+  text-align: center;
+  top: 10px;
   display: none;
 }
 .is-my-move .your-move-notice {
