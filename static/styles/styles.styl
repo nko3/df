@@ -1,3 +1,5 @@
+@import nib
+
 $font_size = 16px
 $font_size_small = $font_size - 4
 $font_size_big = $font_size + 4
@@ -184,8 +186,13 @@ $header_height = 50px
     text-align center
     border 1px solid #444
     box-sizing border-box
+    padding-top 4px
+    line-height 100%
+    user-select none
     color #444
+    cursor default
     &.active
+      cursor pointer
       background #fff
       color #00a
       border 1px solid #000
@@ -202,9 +209,9 @@ $header_height = 50px
     &.br
       border-right-width 2px
     &.error
-      background #fc8b8b
+      background #ffbfbf
       &.active
-        color #900
+        color #c00
       
       
 
