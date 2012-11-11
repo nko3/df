@@ -18,6 +18,7 @@ function Room(data) {
   
   this.watchers = []
   this.remotes = {}
+  var self = this
   
   this.game.on('set:watchers', function(count) {
     rooms.emit('set:watchers', data.id, count)
@@ -25,10 +26,13 @@ function Room(data) {
   
   var game = this.game
   this.game.on('set:state', function(state) {
+    if (state == 'pending') {
+      self.solverId = null
+    }
     if (state == 'end') {
       setTimeout(function() {
         game.emit('set:state', 'pending')
-      }, 5000)
+      }, game.solved ? 8000 : 5000)
     }
   })
   
@@ -93,11 +97,14 @@ Room.prototype.getStream = function() {
               items[i] = self.solution[i]
             }
           }
+          if (self.isBoardSolved() && !self.solverId) {
+            self.solverId = playerId
+          }
           self.boards[playerId] = [].concat(self.board)
           game.emit('result:cpu', {
             playerId: playerId,
-            time: time,
-            ping: (self.turnTime - new Date()) - time
+            time: (new Date() - self.turnTime),
+            ping: (new Date() - self.turnTime) - time
           })
           cb(null, items)
           self.nextMove()
@@ -194,6 +201,12 @@ Room.prototype.nextMove = function() {
     if (game.active.length <= index) index = 0
   }
   var playerId = game.active[index]
+  if (!!playerId && playerId == this.solverId) {
+    game.emit('set:solved', true)
+    game.emit('set:state', 'end')
+    return
+  }
+  
   var remote = this.remotes[playerId]
   if (!this.boards[playerId]) {
     this.boards[playerId] = [].concat(this.startboard)
@@ -214,6 +227,14 @@ Room.prototype.nextMove = function() {
     this.turnTime = new Date
   }
 
+}
+
+Room.prototype.isBoardSolved = function() {
+  for (var i = 0; i < this.board.length; i++) {
+    if (this.board[i] != this.solution[i])
+      return false
+  }
+  return true
 }
 
 Room.prototype.diff = function(b1, b2) {

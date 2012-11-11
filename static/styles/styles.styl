@@ -1,3 +1,5 @@
+@import nib
+
 $font_size = 16px
 $font_size_small = $font_size - 4
 $font_size_big = $font_size + 4
@@ -190,23 +192,43 @@ $header_height = 50px
 .tiles
   width 288px
   height 288px
-  border 2px solid #00
+  border 3px solid #333
+  border-radius 5px
   .tile
     width 32px
     float left
     height 32px
     font-size 26px
     text-align center
-    border 1px solid #666
+    border 1px solid #444
     box-sizing border-box
-    color #555
+    padding-top 4px
+    line-height 100%
+    user-select none
+    color #444
+    cursor default
     &.active
+      cursor pointer
       background #fff
-      color #000
+      color #00a
+      border 1px solid #000
     &.active:hover
     &.active.selected
-      border 1px solid #c00
+      border-color #c00
       background #fee
+    &.bb
+      border-bottom-width 2px
+    &.bt
+      border-top-width 2px
+    &.bl
+      border-left-width 2px
+    &.br
+      border-right-width 2px
+    &.error
+      background #ffbfbf
+      &.active
+        color #c00
+      
       
 
 .controls
@@ -220,6 +242,8 @@ $header_height = 50px
   .control
     @extends .tiles .tile
     background #fffec2
+    color #665438
+    border-color #dcb569
     &:hover
       background #cfc302
       cursor pointer

@@ -81,11 +81,6 @@ exports.init = function(mx, room) {
       !!game.master && game.active.length >= 2
     )
   })
-  game.on('update:solve-btn', function() {
-    el.find('.button-solve').toggle(
-      game.state == 'active' && game.turn == game.myId && !!game.myId
-    );
-  })
 
   game.on('init', function(data) {
     //data -> {name, limit}
@@ -105,8 +100,11 @@ exports.init = function(mx, room) {
     console.log('state', state);
     $('#cont').attr('class', 'state-'+state)
     if (state == 'end') {
-      el.find('.game-over .player-limit').toggle(!game.issolved)
-      el.find('.game-over .winner').toggle(!!game.issolved)
+      el.find('.game-over .player-limit').toggle(!game.solved)
+      el.find('.game-over .winner').toggle(!!game.solved)
+      if (!!game.solved && game.leader) {
+        el.find('.game-over .winner .winnername').text(game.players[game.leader].name)
+      }
       el.find('.player').removeClass('current')
     }
     else if (state == 'pending') {
@@ -118,7 +116,7 @@ exports.init = function(mx, room) {
     }
       
     game.emit('update:start-btn')
-    game.emit('update:solve-btn')
+    el.find('.button-solve').hide()
   })
   game.on('set:watchers', function(count) {
     el.find('.watchers').text(count)
@@ -188,7 +186,20 @@ exports.init = function(mx, room) {
     // move pointer arrow. if playerId == current then show buttons.
     el.find('.player').removeClass('current')
     el.find('#player'+playerId).addClass('current')
-    game.emit('update:solve-btn')
+    
+    if (game.state == 'active' && game.turn == game.myId && !!game.myId) {
+      var checksolved = game.grid.getSolved()
+      if (!checksolved) {
+        el.find('.button-solve').show()
+      }
+      else {
+        el.find('.button-solve').hide()
+        remote.sendSolution({}, 2000, function(err, items) {})
+      }
+    }
+    else {
+      el.find('.button-solve').hide()
+    }
   })
 
   game.initResult = function() {
@@ -258,6 +269,7 @@ exports.init = function(mx, room) {
         cpu = game.resultCpu[id].sum / 1000
         net = game.resultNet[id] ? game.resultNet[id].sum : 0,
         data.push({
+          id: id,
           name: game.players[id].name,
           cpu: cpu,
           net: net,
@@ -268,6 +280,7 @@ exports.init = function(mx, room) {
     data.sort(function(a, b){
       return a.sum == b.sum ? 0 : (a.sum > b.sum ? 1 : -1)
     })
+    game.leader = data.length ? data[0].id : ''
     el.find('.result-leaderboard table tbody').html($($rowleaderboard({data: data})))
   }
 
