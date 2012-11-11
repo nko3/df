@@ -318,6 +318,27 @@ input[type="text"] {
 .result.has-result .result-net-content {
   display: block;
 }
+.result-cpu .title {
+  padding: 3px 25px;
+  background: url("../img/inspector-icons.png") no-repeat;
+  -webkit-background-size: 24px;
+  -moz-background-size: 24px;
+  background-size: 24px;
+}
+.result-net .title {
+  padding: 3px 25px;
+  background: url("../img/inspector-icons.png") no-repeat 0px -27px;
+  -webkit-background-size: 24px;
+  -moz-background-size: 24px;
+  background-size: 24px;
+}
+.result-leaderboard .title {
+  padding: 3px 25px;
+  background: url("../img/inspector-icons.png") no-repeat 0px -54px;
+  -webkit-background-size: 24px;
+  -moz-background-size: 24px;
+  background-size: 24px;
+}
 .result-net {
   overflow-x: hidden;
 }
