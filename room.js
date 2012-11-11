@@ -103,7 +103,7 @@ Room.prototype.getStream = function() {
           self.boards[playerId] = [].concat(self.board)
           game.emit('result:cpu', {
             playerId: playerId,
-            time: (new Date() - self.turnTime),
+            time: time,
             ping: (new Date() - self.turnTime) - time
           })
           cb(null, items)

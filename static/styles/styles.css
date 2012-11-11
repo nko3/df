@@ -107,6 +107,7 @@ body {
   margin-left: 5px;
   padding: 10px;
   width: 314px;
+  position: relative;
 }
 .content .col:first-child {
   margin-left: 0;
@@ -309,4 +310,18 @@ body {
 .game-over .winner .winnername {
   padding: 0 5px;
   font-weight: bold;
+}
+.solve-timeout {
+  font-size: 26px;
+  font-weight: bold;
+  color: #f00;
+  position: absolute;
+  text-align: center;
+  width: 295px;
+  top: 110px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
 }
