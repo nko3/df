@@ -1,8 +1,10 @@
 .room
-  .name Name: #{name}
-  .watchers Watchers:
+  .name #{name}
+  .watchers
+    span.label Watchers:
     span.count #{watchers}
-  .players Players:
+  .players
+    span.label Players:
     span.joined #{joined}
     /
     span.limit #{limit}

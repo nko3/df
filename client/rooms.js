@@ -7,7 +7,7 @@ exports.init = function(mx) {
   var $addroom = require('../views/addroom.jade')
   var el = $($addroom({}))
   el.find('.button-add').on('click', function() {
-    addRoom({name: $('#name').val(), limit: 5})
+    addRoom({name: $('#name').val(), limit: parseInt($('#player-limit').val()) || 8})
   })
   $('#cont').append(el)
 

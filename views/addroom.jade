@@ -1,4 +1,6 @@
 .room(id='addroom')
   input(type='text', id='name', placeholder='Room name')
+  .field.player-limit Player limit:
+    input#player-limit(value='8', type='text')
   .button-add
-    .btn Add
+    .btn + Fork new

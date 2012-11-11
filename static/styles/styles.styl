@@ -11,6 +11,7 @@ body
   color #000
   font-family Helvetica, arial, sans-serif
   font-size $font_size
+  padding-bottom 40px
 
 input[type="text"]
   background-color #fff
@@ -62,6 +63,8 @@ input[type="text"]
   font-weight bold
   padding 6px 0
   text-align center
+  &:hover
+    background-color #080
 
 .room
   background-color #f2f2f2
@@ -82,9 +85,35 @@ input[type="text"]
   .button-add
     .btn
       background-color #f90
+      &:hover
+        background-color #f80
   input
     box-sizing border-box
     width $h - 2*10
+  .field
+    font-size 13px
+    color #666
+    padding 5px 3px 0
+    input
+      width 30px
+      text-align center
+      margin-left 10px
+  .name
+    text-align center
+    font-weight bold
+    height 40px
+    padding 5px
+    overflow hidden
+  .players
+  .watchers
+    padding 0 10px
+    font-size 16px
+    .label
+      width 100px
+      padding-right 10px
+      font-size 14px
+  .players .label
+      padding-right 22px
 
 $header_height = 50px
 .header
@@ -152,7 +181,8 @@ $content_col_w = $content_col_h
       background rgba(255, 255, 255, .6)
       padding 2px 3px
     .current
-      color #090
+      .state-active &
+        color #090
     .is-me
       font-weight bold
       background rgba(255, 255, 250, .9)
@@ -186,6 +216,9 @@ $content_col_w = $content_col_h
     font-weight bold
     padding 0 5px
   .button-start
+    text-align center
+    padding 90px 20px
+    font-size 20px
     input[type="text"]
       margin 0 5px
       text-align center
@@ -194,6 +227,13 @@ $content_col_w = $content_col_h
       margin-top 5px
   .timer-cont
     margin-bottom 20px
+
+.button-start-notmaster
+.button-start-nopeople
+  text-align center
+  padding 90px 10px 0
+  font-size 25px
+
 
 .result
   margin-bottom 10px
@@ -263,7 +303,7 @@ $content_col_w = $content_col_h
 
 .result-leaderboard
   .sum
-    color #900
+    color #b00
 
 .tiles
   width 288px
@@ -344,7 +384,7 @@ $content_col_w = $content_col_h
 .solve-timeout
   font-size 26px
   font-weight bold
-  color #f00
+  color #c00
   position absolute
   text-align center
   width 295px
@@ -358,7 +398,7 @@ $content_col_w = $content_col_h
 .your-move-notice
   position absolute
   z-index 100
-  background #900
+  background #b00
   border-radius()
   color #fff
   padding 5px 10px
@@ -386,6 +426,9 @@ $content_col_w = $content_col_h
   transform-origin 0 50%
   transition-duration 1s
   transition-property -webkit-transform, -moz-transform
+  display none
+  .state-active &
+    display block
 
 .footer-wrap
   bottom 0
