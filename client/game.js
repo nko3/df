@@ -114,7 +114,8 @@ exports.init = function(mx, room) {
       el.find('.result-net-content .packets').empty()
       el.find('.result-leaderboard table tbody').empty()
     }
-      
+    
+    game.lastangle = 0
     game.emit('update:start-btn')
     el.removeClass('is-my-move')
     clearTimeout(game.solveTimeout)
@@ -131,6 +132,10 @@ exports.init = function(mx, room) {
     game.renderPlayers()
     game.emit('update:btn-join')
     game.emit('update:start-btn')
+    game.renderArrow()
+    if (player.id == game.myId) {
+      el.find('#player'+player.id).addClass('is-me')
+    }
   })
   game.on('del:player', function(playerId) {
     el.find('.players-joined').text(game.active.length)
@@ -140,6 +145,7 @@ exports.init = function(mx, room) {
     game.emit('update:start-btn')
 
     game.renderLeaderboard()
+    game.renderArrow()
   })
 
   game.on('set:master', function(playerId) {
@@ -261,22 +267,34 @@ exports.init = function(mx, room) {
   })
 
   game.renderPlayers = function() {
-    var r = parseInt(el.find('.board').css('width')) / 2;
+    var r = 110;
     var l = game.active.length
     var step = Math.PI * 2 / l
     for (var i = 0; i < l; i++) {
-      el.find('#player'+game.active[i])
-        .css('left', r + Math.round(r * Math.cos(i*step)))
-        .css('top', r + Math.round(r * Math.sin(i*step)))
+      var d = el.find('#player'+game.active[i])
+      d
+        .css('left', r + Math.round(r * Math.cos(i*step)) - d.width()*.5)
+        .css('top', r + Math.round(r * Math.sin(i*step))- d.height() *.5)
     }
   }
+  
+  var spin = 0;
   game.renderArrow = function() {
     var i = game.active.indexOf(game.turn)
+    if (-1 == i) {
+      return
+    }
     var l = game.active.length
     var step = Math.PI * 2 / l
     var arrow = el.find('.arrow')
-    arrow.css('-webkit-transform', 'rotate(' + (i*step)+ 'rad)')
-    arrow.css('-moz-transform', 'rotate(' + (i*step)+ 'rad)')
+    var angle = i*step + spin * Math.PI * 2;
+    if (angle < game.lastangle ) {
+      spin++
+      angle += Math.PI * 2
+    }
+    arrow.css('-webkit-transform', 'rotate(' + (angle)+ 'rad)')
+    arrow.css('-moz-transform', 'rotate(' + (angle)+ 'rad)')
+    game.lastangle = angle
   }
 
   game.renderLeaderboard = function() {

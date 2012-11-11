@@ -115,17 +115,28 @@ input[type="text"] {
 .content .col.board-wrap {
   margin-left: 0;
 }
+.board-wrap {
+  overflow: hidden;
+}
 .board-wrap .board {
-  background-color: #ddd;
+  top: 20px;
+  left: 40px;
+  background-color: #d5d5d5;
+  background: -webkit-gradient(radial, 50% 50%, 95, 50% 50%, 120, from(transparent), to(#eee));
   border-radius: 50%;
-  height: 200px;
+  height: 220px;
   position: relative;
-  width: 200px;
+  width: 220px;
 }
 .board-wrap .board .player {
   left: 50%;
   position: absolute;
   top: 50%;
+  max-width: 80px;
+  overflow: hidden;
+  font-size: 15px;
+  -o-text-overflow: clip;
+  text-overflow: clip;
   -webkit-transition-duration: 0.6s;
   -moz-transition-duration: 0.6s;
   -o-transition-duration: 0.6s;
@@ -141,9 +152,16 @@ input[type="text"] {
   -o-transition-timing-function: ease-in-out;
   -ms-transition-timing-function: ease-in-out;
   transition-timing-function: ease-in-out;
+  border-radius: 5px;
+  background: rgba(255,255,255,0.6);
+  padding: 2px 3px;
 }
 .board-wrap .board .current {
   color: #090;
+}
+.board-wrap .board .is-me {
+  font-weight: bold;
+  background: rgba(255,255,250,0.9);
 }
 .board-wrap .button-join,
 .board-wrap .button-solve {
@@ -356,7 +374,7 @@ input[type="text"] {
   position: absolute;
   text-align: center;
   width: 295px;
-  top: 110px;
+  top: 125px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -386,15 +404,15 @@ input[type="text"] {
   display: block;
 }
 .arrow {
-  width: 130px;
+  width: 80px;
   height: 40px;
   position: absolute;
-  background: url("../img/arrow.png") no-repeat 80px;
-  -webkit-background-size: 40px;
-  -moz-background-size: 40px;
-  background-size: 40px;
+  background: url("../img/arrow.png") no-repeat 45px;
+  -webkit-background-size: 30px;
+  -moz-background-size: 30px;
+  background-size: 30px;
   position: absolute;
-  top: 100px;
+  top: 122px;
   left: 160px;
   -webkit-transform-origin: 0 50%;
   -moz-transform-origin: 0 50%;
