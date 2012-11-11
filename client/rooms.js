@@ -3,6 +3,14 @@ var rooms = require('../data/rooms')
 exports.init = function(mx) {
   
   $('#cont').empty()
+  
+  var $addroom = require('../views/addroom.jade')
+  var el = $($addroom({}))
+  el.find('.button-add').on('click', function() {
+    addRoom({name: $('#name').val(), limit: 5})
+  })
+  $('#cont').append(el)
+
   var main = mx.createStream('main')
   main.pipe(rooms)
   
@@ -22,7 +30,7 @@ rooms.on('add:room', function(r) {
   el.find('.button-open').on('click', function() {
     require('./router').navigate('/p/' + r.id)
   })
-  $('#cont').append(el)
+  $('#addroom').before(el)
 })
 
 rooms.on('del:room', function(id) {

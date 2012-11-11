@@ -13,10 +13,9 @@
       span.value.players-joined 0
       /
       span.value.players-limit
+  .your-move-notice IT'S YOUR MOVE
 
 .content
-  .your-move-notice
-    | IT'S YOUR MOVE
   .col.board-wrap
     .board
     .button-join
@@ -60,11 +59,13 @@
             td Count
             td Avg
         tbody
+      .no-result No results yet
     .result.result-net
       .title Network
       .result-net-content
         .names
         .packets
+      .no-result No results yet
     .result.result-leaderboard
       .title Leaderboard
       table
@@ -75,5 +76,14 @@
             td Net
             td Total
         tbody
+      .no-result No results yet
+  .clear
 p
   a(href="javascript:test(1)") test
+
+.footer-wrap
+  .footer
+    .button-rooms
+      .btn Back to rooms
+    .button-help
+      .btn Help me
