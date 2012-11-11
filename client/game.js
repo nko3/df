@@ -209,6 +209,7 @@ exports.init = function(mx, room) {
       el.removeClass('is-my-move')
       clearTimeout(game.solveTimeout)
     }
+    game.renderArrow()
   })
 
   game.initResult = function() {
@@ -268,6 +269,14 @@ exports.init = function(mx, room) {
         .css('left', r + Math.round(r * Math.cos(i*step)))
         .css('top', r + Math.round(r * Math.sin(i*step)))
     }
+  }
+  game.renderArrow = function() {
+    var i = game.active.indexOf(game.turn)
+    var l = game.active.length
+    var step = Math.PI * 2 / l
+    var arrow = el.find('.arrow')
+    arrow.css('-webkit-transform', 'rotate(' + (i*step)+ 'rad)')
+    arrow.css('-moz-transform', 'rotate(' + (i*step)+ 'rad)')
   }
 
   game.renderLeaderboard = function() {
