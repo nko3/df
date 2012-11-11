@@ -88,7 +88,7 @@ Room.prototype.getStream = function() {
           }
           var items = {}
           for (var i in solution) {
-            if (self.solution[i] == solution[i]) {
+            if (self.solution[i] == solution[i] && !self.board[i]) {
               self.board[i] = self.solution[i]
               items[i] = self.solution[i]
             }
@@ -134,7 +134,7 @@ Room.prototype.getStream = function() {
           game.emit('set:master', null)
         }
       }
-      if (game.players.length < 1) {
+      if (game.active.length < 2) {
         if (game.state == 'pending') {
           game.emit('set:starttime', -1)
           clearTimeout(self.startTimeout)

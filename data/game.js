@@ -67,6 +67,18 @@ function Game() {
   })
   this.on('set:state', function(state) {
     self.state = state
+    if (state == 'pending') {
+      self.board = null
+      self.cpuresults = []
+      self.netresults = []
+      var p = {}
+      for (var i in self.players) {
+        if (-1 != self.active.indexOf(i)) {
+          p[i] = self.players[i]
+        }
+      }
+      self.players = p
+    }
   })
   this.on('set:watchers', function(count) {
     self.watchers = count
