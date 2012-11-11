@@ -32,7 +32,7 @@ function Room(data) {
     if (state == 'end') {
       setTimeout(function() {
         game.emit('set:state', 'pending')
-      }, game.solved ? 8000 : 5000)
+      }, game.solved ? 11000 : 5000)
     }
   })
   
