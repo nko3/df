@@ -100,7 +100,7 @@ body {
   -webkit-box-sizing: border-box;
   float: left;
   min-height: 314px;
-  margin-left: 9px;
+  margin-left: 5px;
   padding: 10px;
   width: 314px;
 }
@@ -223,4 +223,27 @@ body {
 .controls .control:hover {
   background: #cfc302;
   cursor: pointer;
+}
+.game-over {
+  border: 3px solid #000;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background: #fee;
+  padding: 14px;
+  text-align: center;
+  font-size: 22px;
+  display: none;
+}
+.state-end .game-over {
+  display: block;
+}
+.game-over .player-limit {
+  display: none;
+}
+.game-over .winner {
+  display: none;
+}
+.game-over .winner .winnername {
+  padding: 0 5px;
+  font-weight: bold;
 }

@@ -101,7 +101,7 @@ $header_height = 50px
     box()
     float left
     min-height ($h = 314px)
-    margin-left 9px
+    margin-left 5px
     padding 10px
     width $h
   .col:first-child
@@ -208,5 +208,22 @@ $header_height = 50px
       background #cfc302
       cursor pointer
     
-
+.game-over
+  border 3px solid #000
+  margin-bottom 10px
+  border-radius 10px
+  background #fee
+  padding 14px
+  text-align center
+  font-size 22px
+  display none
+  .state-end &
+    display block
+  .player-limit
+    display none
+  .winner
+    display none
+    .winnername
+      padding 0 5px
+      font-weight bold
     

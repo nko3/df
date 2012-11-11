@@ -158,8 +158,8 @@ Room.prototype.activate = function () {
   var self = this
   this.boards = {}
   this.getBoard(function(board, solution){
-    self.board = board
-    self.startboard = [].concat(board)
+    self.board = [].concat(board)
+    self.startboard = board
     self.solution = solution
     game.emit('start', board)
     game.emit('set:state', 'active')

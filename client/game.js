@@ -108,8 +108,16 @@ exports.init = function(mx, room) {
     //state -> (pending, active, end)
     console.log('state', state);
     $('#cont').attr('class', 'state-'+state)
-    if (state == 'end')
+    if (state == 'end') {
+      el.find('.game-over .player-limit').toggle(!game.issolved)
+      el.find('.game-over .winner').toggle(!!game.issolved)
       el.find('.player').removeClass('current')
+    }
+    else if (state == 'pending') {
+      el.find('.result-cpu table tbody').empty()
+      el.find('.result-net-content .names').empty()
+      el.find('.result-net-content .packets').empty()
+    }
       
     game.emit('update:start-btn')
     game.emit('update:solve-btn')
