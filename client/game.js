@@ -379,21 +379,17 @@ exports.init = function(mx, room) {
     game.showDialogPlayerData()
   })
   
+  
+  
   game.showDialogPlayerData = function(cb) {
     $playerdata = require('../views/playerdata.jade')
-    var playerdataEl = $($playerdata({}));
-    $('body').append(playerdataEl);
-    $('.dialog-player-data')
-      .css('left', window.innerWidth/2 - $('.dialog-player-data').width()/2)
-      .css('top', window.innerHeight/2 - $('.dialog-player-data').height()/2)
-    $('.dialog-overlay').on('click', function(){
-      playerdataEl.remove()
-    })
+    var d = require('./dialog')($playerdata())
+    $('#name').focus()
     $('.dialog-player-data .btn').on('click', function(){
       var val = $('.dialog-player-data #name').val()
       if (val) {
         window.sessionStorage['myName'] = val
-        playerdataEl.remove()
+        d.remove()
         game.emit('update:player-data')
 
         if (cb)

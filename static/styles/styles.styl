@@ -137,6 +137,11 @@ $header_height = 50px
     .label
       font-weight bold
       padding-left 10px
+      
+    .player-data
+      cursor pointer
+      &:hover
+        text-decoration underline
 
 $content_col_h = 317px
 $content_col_w = $content_col_h
@@ -226,7 +231,10 @@ $content_col_w = $content_col_h
     .btn
       margin-top 5px
   .timer-cont
-    margin-bottom 20px
+    margin-bottom -30px
+    text-align center
+    font-size 22px
+    margin-top 20px
 
 .button-start-notmaster
 .button-start-nopeople
@@ -449,7 +457,7 @@ $content_col_w = $content_col_h
       float right
 
 .dialog-overlay
-  background-color #999
+  background-color #333
   height 100%
   left 0
   opacity .5
@@ -469,3 +477,8 @@ $content_col_w = $content_col_h
     box-sizing border-box
     margin-bottom 5px
     width 100%
+  .q
+    font-size 40px
+    padding 10px 25px 15px 10px
+    line-height 150%
+
