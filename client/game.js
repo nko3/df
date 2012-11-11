@@ -81,6 +81,14 @@ exports.init = function(mx, room) {
       !!game.master && game.active.length >= 2
     )
   })
+  game.on('update:player-data', function() {
+    if (window.sessionStorage['myName']) {
+      el.find('.info .player-data').text(window.sessionStorage['myName'])
+      el.find('.info .player-data-wrap').show();
+    } else {
+      el.find('.info .player-data-wrap').hide();
+    }
+  })
 
   game.on('init', function(data) {
     //data -> {name, limit}
@@ -94,6 +102,7 @@ exports.init = function(mx, room) {
     el.find('.result-leaderboard table tbody').empty()
     game.emit('update:btn-join')
     game.emit('update:start-btn')
+    game.emit('update:player-data')
   })
   game.on('set:state', function(state) {
     //state -> (pending, active, end)
@@ -327,13 +336,23 @@ exports.init = function(mx, room) {
   }
 
   el.find('.button-join .btn').on('click', function() {
-    remote.join({name: $('.button-join > input').val()}, function(err, id) {
-      if (err) {
-        return alert(err.msg)
-      }
-      game.myId = id
-    })
+    function join() {
+      remote.join({name: window.sessionStorage['myName']}, function(err, id) {
+        if (err) {
+          return alert(err.msg)
+        }
+        game.myId = id
+      })
+    }
+
+    if (!window.sessionStorage['myName']) {
+      game.showDialogPlayerData(join)
+
+    } else {
+      join()
+    }
   })
+
   el.find('.button-start .btn').on('click', function() {
     remote.setStartTime(parseInt($('.button-start > input').val()) || 10, 
       function(err) {
@@ -342,6 +361,7 @@ exports.init = function(mx, room) {
         }
       })
   })
+
   el.find('.button-solve').on('click', function() {
     remote.sendSolution(game.grid.buffer, new Date() - game.solveStart, function(err, items) {
       if (err) {
@@ -350,9 +370,38 @@ exports.init = function(mx, room) {
       game.grid.fill(items)
     })
   })
+
   el.find('.button-rooms .btn').on('click', function() {
     require('./router').navigate('/game.html')
   })
+
+  el.find('.player-data').on('click', function() {
+    game.showDialogPlayerData()
+  })
+  
+  game.showDialogPlayerData = function(cb) {
+    $playerdata = require('../views/playerdata.jade')
+    var playerdataEl = $($playerdata({}));
+    $('body').append(playerdataEl);
+    $('.dialog-player-data')
+      .css('left', window.innerWidth/2 - $('.dialog-player-data').width()/2)
+      .css('top', window.innerHeight/2 - $('.dialog-player-data').height()/2)
+    $('.dialog-overlay').on('click', function(){
+      playerdataEl.remove()
+    })
+    $('.dialog-player-data .btn').on('click', function(){
+      var val = $('.dialog-player-data #name').val()
+      if (val) {
+        window.sessionStorage['myName'] = val
+        playerdataEl.remove()
+        game.emit('update:player-data')
+
+        if (cb)
+          cb()
+      }
+    })
+  }
+
 
   $('#cont').html(el)  
   
