@@ -334,3 +334,39 @@ input[type="text"] {
   padding: 0 5px;
   font-weight: bold;
 }
+.solve-timeout {
+  font-size: 26px;
+  font-weight: bold;
+  color: #f00;
+  position: absolute;
+  text-align: center;
+  width: 295px;
+  top: 110px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+  display: none;
+}
+.is-my-move .solve-timeout {
+  display: block;
+}
+.your-move-notice {
+  position: fixed;
+  z-index: 100;
+  background: #e00;
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 100%;
+  left: 50%;
+  width: 250px;
+  margin-left: -130px;
+  top: 25px;
+  display: none;
+}
+.is-my-move .your-move-notice {
+  display: block;
+}

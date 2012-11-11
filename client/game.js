@@ -117,6 +117,7 @@ exports.init = function(mx, room) {
       
     game.emit('update:start-btn')
     el.removeClass('is-my-move')
+    clearTimeout(game.solveTimeout)
   })
   game.on('set:watchers', function(count) {
     el.find('.watchers').text(count)
@@ -185,12 +186,19 @@ exports.init = function(mx, room) {
   game.on('turn', function(playerId) {
     // move pointer arrow. if playerId == current then show buttons.
     el.find('.player').removeClass('current')
-    el.find('#player'+playerId).addClass('current')
+    el.find('#player' + playerId).addClass('current')
     
     if (game.state == 'active' && game.turn == game.myId && !!game.myId) {
       var checksolved = game.grid.getSolved()
       if (!checksolved) {
         el.addClass('is-my-move')
+        game.solveStart = new Date
+        el.find('.solve-timeout').text('')
+        clearTimeout(game.solveTimeout)
+        game.solveTimeout = setInterval(function() {
+          el.find('.solve-timeout').text(
+            ((new Date() - game.solveStart)/1000).toFixed(1) + 's')
+        }, 100)
       }
       else {
         el.removeClass('is-my-move')
@@ -199,6 +207,7 @@ exports.init = function(mx, room) {
     }
     else {
       el.removeClass('is-my-move')
+      clearTimeout(game.solveTimeout)
     }
   })
 
@@ -301,7 +310,7 @@ exports.init = function(mx, room) {
       })
   })
   el.find('.button-solve').on('click', function() {
-    remote.sendSolution(game.grid.buffer, 350, function(err, items) {
+    remote.sendSolution(game.grid.buffer, new Date() - game.solveStart, function(err, items) {
       if (err) {
         return alert(err.msg)
       }

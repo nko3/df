@@ -36,6 +36,21 @@ function Room(data) {
     }
   })
   
+  this.game.on('turn', function(playerId){
+    clearTimeout(self.timeout)
+    if (playerId) {
+      self.timeout = setTimeout(function(){
+        if (game.state != 'active') return;
+        game.emit('result:cpu', {
+          playerId: playerId,
+          time: 10000,
+          ping: 0
+        })
+        self.nextMove()
+      }, 10000)
+    }
+  })
+  
   this.game.emit('set:watchers', 0)
 }
 
@@ -103,7 +118,7 @@ Room.prototype.getStream = function() {
           self.boards[playerId] = [].concat(self.board)
           game.emit('result:cpu', {
             playerId: playerId,
-            time: (new Date() - self.turnTime),
+            time: time,
             ping: (new Date() - self.turnTime) - time
           })
           cb(null, items)
