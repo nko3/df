@@ -149,7 +149,7 @@ body {
 .result {
   margin-bottom: 10px;
 }
-.result-cpu td {
+.result td {
   width: 25%;
 }
 .result-net {
