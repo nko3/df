@@ -371,9 +371,7 @@ exports.init = function(mx, room) {
     })
   })
 
-  el.find('.button-rooms .btn').on('click', function() {
-    require('./router').navigate('/game.html')
-  })
+
 
   el.find('.player-data').on('click', function() {
     game.showDialogPlayerData()
@@ -399,7 +397,8 @@ exports.init = function(mx, room) {
   }
 
 
-  $('#cont').html(el)  
+  $('#cont').html(el)
+  
   
   var mux = new MuxDemux()
   mux.pipe(mx.createStream({room: room})).pipe(mux)

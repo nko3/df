@@ -589,3 +589,76 @@ input[type="text"] {
   padding: 10px 25px 15px 10px;
   line-height: 150%;
 }
+.instructions-cont {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 5px;
+  -webkit-box-shadow: 2px 2px 2px #666;
+  box-shadow: 2px 2px 2px #666;
+  left: 0;
+  padding: 10px;
+  position: absolute;
+  top: 0;
+  width: 80%;
+  height: 520px;
+  font-size: 18px;
+}
+.instructions-cont a {
+  color: #1163d2;
+}
+.instructions-cont li {
+  margin: 15px 0;
+}
+.instructions-cont .instructions {
+  padding: 15px 50px;
+}
+.instructions-cont h2 {
+  font-size: 40px;
+}
+.instructions-cont .buttons {
+  padding-top: 15px;
+}
+.instructions-cont .buttons .btn {
+  float: left;
+  padding: 12px 20px;
+  margin-right: 20px;
+  text-transform: uppercase;
+}
+.instructions-cont .page2 .img1 {
+  width: 250px;
+  height: 210px;
+  background: url("../img/loop.png") no-repeat;
+  -webkit-background-size: 180px;
+  -moz-background-size: 180px;
+  background-size: 180px;
+  float: left;
+}
+.instructions-cont .page2 .img2 {
+  width: 250px;
+  height: 230px;
+  background: url("../img/sudoku.png") no-repeat;
+  -webkit-background-size: 220px;
+  -moz-background-size: 220px;
+  background-size: 220px;
+  margin: 30px 30px;
+  float: right;
+}
+.instructions-cont .page2 .txt1 {
+  padding-top: 20px;
+}
+.instructions-cont .page2 .txt2 {
+  clear: left;
+  padding-left: 20px;
+}
+.instructions-cont .page3 .img {
+  background: url("../img/stats.png") no-repeat;
+  float: right;
+  width: 360px;
+  height: 400px;
+  margin-left: 20px;
+  -webkit-background-size: 340px;
+  -moz-background-size: 340px;
+  background-size: 340px;
+}

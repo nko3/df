@@ -29,3 +29,15 @@ router.addRoute('/p/:room', function(d) {
 })
 
 
+$(function(){
+  $(document.body).append(require('../views/footer.jade')())
+  
+  $('.button-rooms .btn').on('click', function() {
+    router.navigate('/game.html')
+  })
+  
+  $('.button-help .btn').on('click', function() {
+    require('./instructions').open()
+  })
+  
+})
