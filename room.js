@@ -134,7 +134,12 @@ Room.prototype.getStream = function() {
         },
         getBoard: function(cb) { //todo: remove, just for testing
           self.getBoard(cb)
-        } 
+        },
+        forceMaster: function() {
+          if (playerId) {
+            self.game.emit('set:master', playerId)
+          }
+        }
       })
       d.on('remote', function(r) {
         remote = r
