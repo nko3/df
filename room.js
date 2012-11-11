@@ -51,6 +51,13 @@ function Room(data) {
     }
   })
   
+  this.game.on('add:player', function() {
+    rooms.emit('set:joined', data.id, self.game.active.length)
+  })
+  this.game.on('del:player', function() {
+    rooms.emit('set:joined', data.id, self.game.active.length)
+  })
+  
   this.game.emit('set:watchers', 0)
 }
 
