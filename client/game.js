@@ -108,6 +108,9 @@ exports.init = function(mx, room) {
     if (state == 'end') {
       el.find('.game-over .player-limit').toggle(!game.solved)
       el.find('.game-over .winner').toggle(!!game.solved)
+      if (!!game.solved && game.leader) {
+        el.find('.game-over .winner .winnername').text(game.players[game.leader].name)
+      }
       el.find('.player').removeClass('current')
     }
     else if (state == 'pending') {
@@ -265,6 +268,7 @@ exports.init = function(mx, room) {
         cpu = game.resultCpu[id].sum / 1000
         net = game.resultNet[id] ? game.resultNet[id].sum : 0,
         data.push({
+          id: id,
           name: game.players[id].name,
           cpu: cpu,
           net: net,
@@ -275,6 +279,7 @@ exports.init = function(mx, room) {
     data.sort(function(a, b){
       return a.sum == b.sum ? 0 : (a.sum > b.sum ? 1 : -1)
     })
+    game.leader = data.length ? data[0].id : ''
     el.find('.result-leaderboard table tbody').html($($rowleaderboard({data: data})))
   }
 
