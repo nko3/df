@@ -86,9 +86,11 @@ Room.prototype.getStream = function() {
           if (game.turn != playerId) {
             return cb({msg: 'timed out'})
           }
+          var items = {}
           for (var i in solution) {
             if (self.solution[i] == solution[i]) {
               self.board[i] = self.solution[i]
+              items[i] = self.solution[i]
             }
           }
           self.boards[playerId] = [].concat(self.board)
@@ -97,7 +99,7 @@ Room.prototype.getStream = function() {
             time: time,
             ping: (self.turnTime - new Date()) - time
           })
-          cb(null)
+          cb(null, items)
           self.nextMove()
         },
         increaseTimeout: function(timeout, cb) {

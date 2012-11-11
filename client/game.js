@@ -249,10 +249,11 @@ exports.init = function(mx, room) {
       })
   })
   el.find('.button-solve').on('click', function() {
-    remote.sendSolution(game.grid.buffer, 350, function(err, cb) {
+    remote.sendSolution(game.grid.buffer, 350, function(err, items) {
       if (err) {
-        alert(err.msg)
+        return alert(err.msg)
       }
+      game.grid.fill(items)
     })
   })
 
@@ -273,14 +274,14 @@ exports.init = function(mx, room) {
     global.remote = remote = r
     r.transform('beep', function (s) {
         console.log('beep => ' + s);
-    });
+    })
   })
   d.pipe(mux.createStream('dnode')).pipe(d)
-  
+  global.game = game
   
   return {
     dispose: function() {
-      mux.end();
+      mux.end()
     }
   }
 }
