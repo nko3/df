@@ -1,6 +1,6 @@
 {
   "name": "nodoku",
-  "version": "0.0.1-21",
+  "version": "0.0.1-23",
   "contributors": [
     "Tõnis Tiigi <tonistiigi@gmail.com>",
     "Pavel Jartsev <papi@digitalfruit.info>"
@@ -30,7 +30,9 @@
     "monotonic-timestamp": "0.0.7",
     "routes": "~0.1.1",
     "dnode": "~1.0.2",
-    "sudoku": "0.0.2"
+    "sudoku": "0.0.2",
+    "redis": "~0.8.2",
+    "event-stream": "~3.0.7"
   },
   "engines": {
     "node": "0.8.x"
