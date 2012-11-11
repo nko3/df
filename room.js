@@ -3,7 +3,8 @@ var dnode = require('dnode')
 var rooms = require('./data/rooms')
 var Game = require('./data/game')
 
-var kv = require('kv')('/tmp/kv')
+var kv = require('kv/kv')(require('./redis-kv'))(conf.redis)
+
 kv.has('rooms', function(err, stat){
   if (!err && stat) {
     kv.get('rooms').pipe(rooms)

@@ -5,7 +5,8 @@ var through = require('through')
 
 var conf = global.conf = require('rc')(require('./package').name, {
   port: 3300,
-  room_delete_key: 'room_delete_key'
+  room_delete_key: 'room_delete_key',
+  redis: 'redis://localhost/nodoku'
 })
 
 var app = express()
